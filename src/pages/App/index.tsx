@@ -1,6 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import 'antd/dist/antd.css';
+
+import React from 'react';
+import logo from 'assests/images/logo.svg';
 
 const App = () => {
   return (
