@@ -1,6 +1,3 @@
-import './App.css';
-import 'antd/dist/antd.css';
-
 import React from 'react';
 import logo from 'assests/images/logo.svg';
 
