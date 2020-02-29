@@ -50,8 +50,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm test:coverage"
+      "pre-commit": "npm run test",
+      "pre-push": "npm run test:coverage"
     }
   },
   "browserslist": {
