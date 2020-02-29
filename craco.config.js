@@ -2,6 +2,7 @@ const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 const WebpackBar = require("webpackbar");
 const CracoAntDesignPlugin = require("craco-antd");
 const path = require("path");
+const { ESLINT_MODES } = require("@craco/craco");
 
 // Don't open the browser during development
 process.env.BROWSER = "none";
@@ -26,5 +27,8 @@ module.exports = {
                 )
             }
         }
-    ]
+    ],
+    eslint: {
+        mode: ESLINT_MODES.file
+    },
 };

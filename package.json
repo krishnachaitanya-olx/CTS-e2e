@@ -23,7 +23,7 @@
     "google-closure-library": "^20200204.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "react": "^16.12.0",
+    "react": "^16.13.0",
     "react-dom": "^16.12.0",
     "react-helmet": "^5.2.1",
     "react-router-dom": "^5.1.2",
@@ -44,10 +44,15 @@
     "build-storybook": "build-storybook -s public",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
-    "test:coverage": "npm test -- --coverage"
+    "test:coverage": "npm test -- --coverage",
+    "generate:type-doc": "npx typedoc",
+    "lint:css":"stylelint './src/**/*.tsx'"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm test",
+      "pre-push": "npm test:coverage"
+    }
   },
   "browserslist": {
     "production": [
@@ -70,7 +75,7 @@
     "@storybook/addons": "^5.3.13",
     "@storybook/preset-create-react-app": "^1.5.2",
     "@storybook/preset-typescript": "^1.2.0",
-    "@storybook/react": "^5.3.13",
+    "@storybook/react": "^5.3.14",
     "@typescript-eslint/eslint-plugin": "^2.21.0",
     "@typescript-eslint/parser": "^2.21.0",
     "babel-eslint": "^10.0.3",
@@ -82,13 +87,20 @@
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.18.3",
-    "eslint-plugin-react-hooks": "^2.4.0",
+    "eslint-plugin-react-hooks": "^2.5.0",
     "fork-ts-checker-webpack-plugin": "^4.0.4",
     "google-closure-compiler": "^20200204.0.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
     "react-docgen-typescript-loader": "^3.6.0",
     "react-is": "^16.12.0",
     "react-snap": "^1.23.0",
-    "ts-loader": "^6.2.1"
+    "stylelint": "^13.2.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0",
+    "ts-loader": "^6.2.1",
+    "typedoc": "^0.16.11"
   },
   "reactSnap": {
     "source": "dist",
