@@ -19,7 +19,7 @@
     "noEmit": true,
     "jsx": "react",
     "watch": true,
-    "baseUrl": "src"
+    "baseUrl": "src",
   },
   "include": [
     "src"
