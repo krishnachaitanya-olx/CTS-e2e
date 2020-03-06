@@ -2,9 +2,9 @@ import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import AppLayout from 'grids/PageGrid/PageGrid.component';
-import GlobalStyle from './App.style';
 import { Helmet } from 'react-helmet';
 import NotFoundPage from 'pages/NotFoundPage/NotFoundPage.component';
+import GlobalStyle from './App.style';
 
 const App: FC<{}> = () => (
   <>

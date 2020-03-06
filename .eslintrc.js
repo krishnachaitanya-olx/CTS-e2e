@@ -21,17 +21,17 @@ module.exports = {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".tsx"] }],
         "react/jsx-indent": [1, 4],
         "import/no-unresolved": "off",
-        "import/order": [1, {"alphabetize": true}]
-        // "no-param-reassign": [2, { "props": false }],
-        // "jsx-quotes": ["error", "prefer-single"],
-        // "import/extensions": [
-        //     "error",
-        //     "ignorePackages",
-        //     {
-        //       "ts": "never",
-        //       "tsx": "never"
-        //     }
-        // ]
+        "import/order": [1, {"alphabetize": true}],
+        "no-param-reassign": [2, { "props": false }],
+        "jsx-quotes": ["error", "prefer-single"],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+              "ts": "never",
+              "tsx": "never"
+            }
+        ]
     },
     settings: {
         react: {
