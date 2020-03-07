@@ -1,10 +1,7 @@
 module.exports = {
     parser: '@typescript-eslint/parser',  // Specifies the ESLint parser
     extends: [
-        'plugin:react/recommended',  // Uses the recommended rules from @eslint-plugin-react
         'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from @typescript-eslint/eslint-plugin
-        'eslint-config-react-app',
-        'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'airbnb-typescript',
         'airbnb/hooks'
@@ -21,7 +18,14 @@ module.exports = {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".tsx"] }],
         "react/jsx-indent": [1, 4],
         "import/no-unresolved": "off",
-        "import/order": [1, {"alphabetize": true}],
+        "import/order": [1,
+            {
+                "alphabetize": {
+                    order: 'asc', /* sort in ascending order. Options: ['ignore', 'asc', 'desc'] */
+                    caseInsensitive: true /* ignore case. Options: [true, false] */
+                }
+            }
+        ],
         "no-param-reassign": [2, { "props": false }],
         "jsx-quotes": ["error", "prefer-single"],
         "import/extensions": [
@@ -31,7 +35,9 @@ module.exports = {
               "ts": "never",
               "tsx": "never"
             }
-        ]
+        ],
+        "react/prop-types": "off",
+        "import/no-extraneous-dependencies": "off"
     },
     settings: {
         react: {
@@ -50,5 +56,5 @@ module.exports = {
         expect: true,
         document: true,
     },
-    ignorePatterns: ["craco.config.js", "node_modules/"],
+    // ignorePatterns: ["craco.config.js", "node_modules/"],
 }

@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import AppLayout from 'grids/PageGrid/PageGrid.component';
-import { Helmet } from 'react-helmet';
-import NotFoundPage from 'pages/NotFoundPage/NotFoundPage.component';
+import AppLayout from 'grids/Layout/Layout.component';
 import GlobalStyle from './App.style';
+import { Helmet } from 'react-helmet';
+import NotFound from 'pages/NotFoundPage/NotFoundPage.component';
 
 const App: FC<{}> = () => (
   <>
@@ -17,7 +17,7 @@ const App: FC<{}> = () => (
       </Helmet>
       <Switch>
           <Route path='/' component={AppLayout} />
-          <Route component={NotFoundPage} />
+          <Route component={NotFound} />
       </Switch>
   </>
 );

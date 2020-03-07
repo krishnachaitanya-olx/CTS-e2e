@@ -10,17 +10,17 @@ const { Item } = Menu;
 
 const Sidebar: FC<AppLayoutInterface> = ({ match }) => (
     <Sider collapsed>
-            <Menu
-                mode='inline'
-                defaultSelectedKeys={[ match.path ]}
-            >
-                <Item key='/candidates'>
-                    <Link to='/candidates'>
-                        <VideoCameraOutlined />
-                    </Link>
-                </Item>
-            </Menu>
-        </Sider>
+        <Menu
+            mode='inline'
+            defaultSelectedKeys={[match.path]}
+        >
+            <Item key='/candidates'>
+                <Link to='/candidates'>
+                    <VideoCameraOutlined />
+                </Link>
+            </Item>
+        </Menu>
+    </Sider>
 );
 
 export default memo(Sidebar);

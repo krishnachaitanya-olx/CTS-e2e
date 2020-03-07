@@ -5,7 +5,10 @@ import { Router } from 'react-router-dom';
 import history from 'utils/misc/history';
 import { render } from 'react-dom';
 import serviceWorker from 'serviceWorker';
-
+/**
+ * String of the application.
+ * React strict mode implememnted.
+ */
 render(
     <Router history={history}>
       <StrictMode>

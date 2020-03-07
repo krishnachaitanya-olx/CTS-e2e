@@ -33,6 +33,7 @@
     "craco-preact": "^1.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "eslint": "^6.8.0",
     "google-closure-library": "^20200224.0.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
