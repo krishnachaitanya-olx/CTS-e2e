@@ -36,9 +36,9 @@
     "webpackbar": "^4.0.0"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "SKIP_PREFLIGHT_CHECK=true craco start",
     "build": "craco build",
-    "test": "craco test",
+    "test": "SKIP_PREFLIGHT_CHECK=true craco test --watchAll",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
@@ -47,12 +47,6 @@
     "test:coverage": "npm test -- --coverage",
     "generate:type-doc": "npx typedoc",
     "lint:css":"stylelint './src/**/*.tsx'"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run test",
-      "pre-push": "npm run test:coverage"
-    }
   },
   "browserslist": {
     "production": [
