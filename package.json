@@ -62,7 +62,7 @@
   "scripts": {
     "start": "SKIP_PREFLIGHT_CHECK=true craco start",
     "build": "SKIP_PREFLIGHT_CHECK=true craco build",
-    "test": "craco test",
+    "test": "SKIP_PREFLIGHT_CHECK=true craco test --watchAll",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
