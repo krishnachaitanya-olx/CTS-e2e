@@ -1,10 +1,10 @@
 import React, { StrictMode } from 'react';
 
-import App from 'pages/App/App.component';
-import { Router } from 'react-router-dom';
-import history from 'utils/misc/history';
 import { render } from 'react-dom';
+import { Router } from 'react-router-dom';
+import App from 'pages/App/App.component';
 import serviceWorker from 'serviceWorker';
+import history from 'utils/misc/history';
 
 /**
  * String of the application.

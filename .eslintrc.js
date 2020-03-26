@@ -16,7 +16,7 @@ module.exports = {
     },
     rules: {
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".tsx"] }],
-        "react/jsx-indent": [1, 4],
+        "react/jsx-indent": 'off',
         "import/no-unresolved": "off",
         "import/order": [1,
             {
@@ -37,7 +37,8 @@ module.exports = {
             }
         ],
         "react/prop-types": "off",
-        "import/no-extraneous-dependencies": "off"
+        "import/no-extraneous-dependencies": "off",
+        "@typescript-eslint/indent": ["off", 4]
     },
     settings: {
         react: {

@@ -1,25 +1,23 @@
+import { ApolloProvider } from '@apollo/react-hooks';
 import React, { FC } from 'react';
-import { Route, Switch } from 'react-router-dom';
-
-import AppLayout from 'grids/Layout/Layout.component';
-import GlobalStyle from './App.style';
 import { Helmet } from 'react-helmet';
-import NotFound from 'pages/NotFoundPage/NotFoundPage.component';
+import GlobalStyle from './App.style';
+import Routes from './Routes.component';
+import client from 'utils/graphql/client';
 
 const App: FC<{}> = () => (
-  <>
-      <GlobalStyle />
-      <Helmet
-        titleTemplate='CTS - %s'
-        defaultTitle='CTS'
-      >
-          <meta name='description' content='CMS for Aasaanjobs' />
-      </Helmet>
-      <Switch>
-          <Route path='/' component={AppLayout} />
-          <Route component={NotFound} />
-      </Switch>
-  </>
+    <>
+        <GlobalStyle />
+        <Helmet
+          titleTemplate='CTS - %s'
+          defaultTitle='CTS'
+        >
+            <meta name='description' content='CMS for Aasaanjobs' />
+        </Helmet>
+        <ApolloProvider client={client}>
+            <Routes />
+        </ApolloProvider>
+    </>
 );
 
 export default App;

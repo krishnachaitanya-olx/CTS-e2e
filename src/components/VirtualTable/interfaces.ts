@@ -1,5 +1,6 @@
-export interface MergedColumnInterface {
-  columns: Array<{ width: number }>;
-  tableWidth: number;
-  widthColumnCount: number;
+import { ComponentType } from 'react';
+import { GridChildComponentProps } from 'react-window';
+
+export interface VirualTableProps {
+    Template: ComponentType<GridChildComponentProps>;
 }
