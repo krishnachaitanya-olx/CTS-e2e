@@ -12,15 +12,28 @@ test('renders learn react link', () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test('renders learn react link', () => {
+test('renders without error', () => {
   const { getByText } = render(<App />);
   const linkElement = getByText(/learn react/i);
-  console.log('\n\n',typeof(linkElement));
   expect(linkElement).toMatchSnapshot();
 });
 
-test('renders learn react link', () => {
+test('renders without crashing', () => {
+  const { asFragment } = render(<App />);
+  expect(asFragment).toMatchSnapshot();
+});
+
+test('verify class name', () => {
+  const { container } = render(<App />);
+  expect(container.firstChild).toHaveClass('App');
+});
+
+test('verify learn react exist', () => {
+  const { getByTestId } = render(<App />);
+  expect(getByTestId('learnReact')).toHaveTextContent('Learn React');
+});
+
+test('verify href', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/learn react/i);
-  expect(linkElement).not.toEqual(HTMLElement);
+  expect(getByText('Learn React').closest('a')).toHaveAttribute('href', 'https://reactjs.org');
 });
