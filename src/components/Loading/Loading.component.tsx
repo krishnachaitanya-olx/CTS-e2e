@@ -4,6 +4,6 @@ import { Spin } from 'antd';
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-const Loading = () => <Spin indicator={antIcon} />;
+const Loading = () => <Spin aria-label='loading-spinner' indicator={antIcon} />;
 
 export default Loading;

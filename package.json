@@ -4,8 +4,9 @@
   "private": true,
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
+    "@apollo/react-testing": "^3.1.3",
     "@testing-library/jest-dom": "^5.1.1",
-    "@testing-library/react": "^9.5.0",
+    "@testing-library/react": "^10.0.2",
     "@testing-library/user-event": "^10.0.0",
     "@types/apollo-upload-client": "^8.1.3",
     "@types/axios": "^0.14.0",
@@ -41,6 +42,7 @@
     "eslint": "^6.8.0",
     "google-closure-library": "^20200224.0.0",
     "graphql": "^14.6.0",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
@@ -63,7 +65,7 @@
   "scripts": {
     "start": "SKIP_PREFLIGHT_CHECK=true craco start",
     "build": "SKIP_PREFLIGHT_CHECK=true craco build",
-    "test": "SKIP_PREFLIGHT_CHECK=true craco test --watchAll",
+    "test": "SKIP_PREFLIGHT_CHECK=true craco test --env=jest-environment-jsdom-sixteen --watchAll",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
