@@ -1,7 +1,8 @@
-import App from './App.component';
 import React from 'react';
-import { render } from '@testing-library/react';
+import App from './App.component';
 
-test('renders learn react link', () => {
-  
+describe('App', () => {
+    it('should work', () => {
+        expect(1).toBe(1);
+    });
 });

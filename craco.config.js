@@ -34,4 +34,14 @@ module.exports = {
     eslint: {
         mode: ESLINT_MODES.file
     },
+    jest: {
+        configure(config) {
+            // don't transform less files
+            config.transformIgnorePatterns = [
+                '"[/\\\\]node_modules[/\\\\].+\\.(less)$"'
+            ]
+
+            return config;
+        },
+    }
 };
