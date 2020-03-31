@@ -15,7 +15,7 @@ const Sidebar: FC<AppLayoutInterface> = ({ match }) => (
             defaultSelectedKeys={[match.path]}
         >
             <Item key='/candidates'>
-                <Link to='/candidates'>
+                <Link to='/candidates' aria-label="link-to-candidates">
                     <VideoCameraOutlined />
                 </Link>
             </Item>
