@@ -20,7 +20,6 @@ const getComponent = (childrenProps: ReactNode, data: ListingGqlData): Array<Rea
       );
       return obj;
     });
-    console.log('coming in data', childrenProps, ListingSearch, ListingTable);
     if (Array.isArray(childrenProps)) {
       children = childrenProps;
     } else {
@@ -36,7 +35,6 @@ const getComponent = (childrenProps: ReactNode, data: ListingGqlData): Array<Rea
                   dataSource: edges,
                 });
             }
-            console.log('coming in if', child, componentType === ListingTable, componentType === ListingSearch);
             if (componentType === ListingSearch && !Search) {
               Search = cloneElement(child, {
                 ...child.props,

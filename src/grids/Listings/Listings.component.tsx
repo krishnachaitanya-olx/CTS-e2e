@@ -45,7 +45,6 @@ const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) =
     );
   }
   const [Table, Search] = getComponent(children, data);
-  console.log('coming in search', Search);
   return (
     <PageLayout>
       <PageHeader
