@@ -1,6 +1,6 @@
 import { useQuery } from '@apollo/react-hooks';
 import {
- Layout, PageHeader, Row, Col,
+ Layout, PageHeader, Row, Col, Result,
 } from 'antd';
 import { gql } from 'apollo-boost';
 import React, { memo, FC } from 'react';
@@ -12,10 +12,12 @@ import ListSkelton from 'assests/skeltons/ListingSkelton.component';
 const {
  Content,
 } = Layout;
+const areEqual = (): boolean => true;
 
 const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) => {
-  const [Table] = getComponent(children);
-  const { loading } = useQuery(dataSourceGql?.query || gql``, {
+  const {
+    loading, error, data,
+  } = useQuery(dataSourceGql?.query || gql``, {
     skip: !dataSourceGql || !dataSourceGql.query,
     variables: {
       filters: {},
@@ -24,12 +26,22 @@ const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) =
       after: 0,
     },
   });
-
   if (loading) {
     return (
       <ListSkelton />
     );
   }
+
+  if (error) {
+    return (
+      <Result
+        status='500'
+        title='500'
+        subTitle='Sorry, Server returned an error.'
+      />
+    );
+  }
+  const [Table] = getComponent(children, data);
   return (
     <PageLayout>
       <PageHeader
@@ -45,14 +57,12 @@ const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) =
         </Row>
       </PageHeader>
       <Content>
-        <div>
-          {
-            Table
-          }
-        </div>
+        {
+          Table
+        }
       </Content>
     </PageLayout>
   );
 };
 
-export default memo(ListingGrid);
+export default memo(ListingGrid, areEqual);

@@ -32,3 +32,15 @@ export interface ListingInterface {
   children: ReactNode;
   title: ReactNode;
 }
+
+export interface ListingGqlData {
+  nodes: {
+    totalCount: number;
+    edges: Array<object>;
+    pageInfo: {
+      hasNextPage: boolean;
+      totalPages: number;
+      pageNumber: number;
+    };
+  };
+}
