@@ -3,12 +3,14 @@ import {
 } from 'lodash';
 import { ReactNode, cloneElement } from 'react';
 import { ListingGqlData } from './interfaces';
+import ListingSearch from 'components/ListingSearch/ListingSearch.component';
 import ListingTable from 'components/ListingTable/ListingTable.component';
 
 const getComponent = (childrenProps: ReactNode, data: ListingGqlData): Array<ReactNode> => {
     let Table: ReactNode = null;
+    let Search: ReactNode = null;
+    const Sort: ReactNode = null;
     const Filter: ReactNode = null;
-    const Search: ReactNode = null;
     let children = [];
     const edges = map(data.nodes.edges, (obj) => {
       set(
@@ -18,7 +20,7 @@ const getComponent = (childrenProps: ReactNode, data: ListingGqlData): Array<Rea
       );
       return obj;
     });
-    console.log('coming in data', JSON.stringify(data), edges);
+    console.log('coming in data', childrenProps, ListingSearch, ListingTable);
     if (Array.isArray(childrenProps)) {
       children = childrenProps;
     } else {
@@ -34,10 +36,16 @@ const getComponent = (childrenProps: ReactNode, data: ListingGqlData): Array<Rea
                   dataSource: edges,
                 });
             }
+            console.log('coming in if', child, componentType === ListingTable, componentType === ListingSearch);
+            if (componentType === ListingSearch && !Search) {
+              Search = cloneElement(child, {
+                ...child.props,
+              });
+            }
           }
         });
     }
-    return [Table, Filter, Search];
+    return [Table, Search, Sort, Filter];
 };
 
 export default memoize(getComponent);

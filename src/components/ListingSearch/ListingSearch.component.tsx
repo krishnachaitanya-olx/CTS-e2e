@@ -1,7 +1,14 @@
-import React, { FC, memo } from 'react';
+import { Input } from 'antd';
+import React, { FC } from 'react';
+
+const { Search } = Input;
 
 const ListingSearch: FC<{}> = () => (
-    <>hello</>
+    <Search
+      placeholder='input search text'
+      onSearch={(value): void => console.log(value)}
+      size='large'
+    />
 );
 
-export default memo(ListingSearch);
+export default ListingSearch;
