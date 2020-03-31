@@ -17,7 +17,8 @@ const areEqual = (): boolean => true;
 const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) => {
   const {
     loading, error, data,
-  } = useQuery(dataSourceGql?.query || gql``, {
+    // TODO: change dataSourceGql to optional chaining after fixing jest
+  } = useQuery((dataSourceGql && dataSourceGql.query) || gql``, {
     skip: !dataSourceGql || !dataSourceGql.query,
     variables: {
       filters: {},
@@ -28,7 +29,9 @@ const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) =
   });
   if (loading) {
     return (
-      <ListSkelton />
+      <div aria-label='loading-skeleton'>
+        <ListSkelton />
+      </div>
     );
   }
 
@@ -42,6 +45,7 @@ const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) =
     );
   }
   const [Table] = getComponent(children, data);
+
   return (
     <PageLayout>
       <PageHeader
