@@ -3,12 +3,15 @@ import App from './App.component';
 import { render, wait } from '@testing-library/react';
 import { Router } from 'react-router-dom';
 import history from 'utils/misc/history';
+import { MockedProvider } from '@apollo/react-testing';
 
 describe('App', () => {
     it('should set the page title', async () => {
         render(
             <Router history={history}>
-                <App />
+                <MockedProvider mocks={[]} addTypename={false}>
+                    <App />
+                </MockedProvider>
             </Router>
         );
 
@@ -18,7 +21,9 @@ describe('App', () => {
     it('should set the required meta tags', async () => {
         render(
             <Router history={history}>
-                <App />
+                <MockedProvider mocks={[]}>
+                    <App />
+                </MockedProvider>
             </Router>
         );
 
