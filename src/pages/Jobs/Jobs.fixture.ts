@@ -38,6 +38,12 @@ const mockData = {
                         last_name: 'Tawde',
                     },
                 },
+                associated_kam: {
+                    user: {
+                        first_name: 'Bala',
+                        last_name: 'Kumar',
+                    },
+                },
                 key: '1aec1662-f95c-4f45-bdab-f673cfbda952',
             },
         ],
