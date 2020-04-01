@@ -1,5 +1,5 @@
-import React from 'react';
 import { render } from '@testing-library/react';
+import React from 'react';
 import { NotFoundPage } from './NotFoundPage.component';
 
 describe('NotFoundPage', () => {
@@ -15,10 +15,10 @@ describe('NotFoundPage', () => {
         expect(getByText('Sorry, the page you visited does not exist.')).toBeTruthy();
     });
 
-    it('should have a link to go back home', async () => {
+    it('should have a link to go back home', () => {
         const { getByText } = render(<NotFoundPage />);
         const btnGoHome = getByText('Back Home');
-        
+
         expect(btnGoHome.parentElement).toHaveAttribute('href', '/');
     });
 });

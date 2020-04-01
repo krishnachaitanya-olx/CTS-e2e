@@ -48,6 +48,18 @@ const jobShape = `
         last_name
       }
     }
+    key_account_manager {
+      user {
+        first_name
+        last_name
+      }
+    }
+    recruitment_support {
+      user {
+        first_name
+        last_name
+      }
+    }
 `;
 
 const jobsQuery = gql`

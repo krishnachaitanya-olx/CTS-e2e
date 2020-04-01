@@ -363,7 +363,7 @@ export const ImportantPeopleColumn: FC<Columns> = memo(
                     <Col>
                         <Text ellipsis>
                             {
-                                `${get(record, 'associated_cse.user.first_name', '')} ${get(record, 'associated_cse.user.last_name', '')}`
+                                `${get(record, 'key_account_manager.user.first_name', '')} ${get(record, 'associated_cse.user.last_name', '')}`
                             }
                         </Text>
                     </Col>
@@ -377,7 +377,7 @@ export const ImportantPeopleColumn: FC<Columns> = memo(
                     <Col>
                         <Text ellipsis>
                             {
-                                `${get(record, 'associated_cse.user.first_name', '')} ${get(record, 'associated_cse.user.last_name', '')}`
+                                `${get(record, 'recruitment_support.user.first_name', '')} ${get(record, 'associated_cse.user.last_name', '')}`
                             }
                         </Text>
                     </Col>
