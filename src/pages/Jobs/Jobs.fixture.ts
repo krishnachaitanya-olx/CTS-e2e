@@ -24,8 +24,15 @@ const mockData = {
                 vacancies: 3,
                 locations: [],
                 expectation: {
-                    degree_requirements: null,
-                    work_exp_requirements: null,
+                    degree_requirements: {
+                        degree: {
+                            name: '',
+                        },
+                    },
+                    work_exp_requirements: {
+                        min_experience: 8,
+                        max_experience: 24,
+                    },
                 },
                 offer: {
                     salary_format: 'ANNUAL',
@@ -44,6 +51,7 @@ const mockData = {
                         last_name: 'Kumar',
                     },
                 },
+                recent_slot: 'today',
                 key: '1aec1662-f95c-4f45-bdab-f673cfbda952',
             },
         ],
