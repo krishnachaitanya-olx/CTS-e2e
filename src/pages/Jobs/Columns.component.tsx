@@ -256,8 +256,9 @@ export const OpeningsColumn: FC<Columns> = memo(
                             ? (
                             <Menu>
                                 {
+                                    // TODO: replace with optional chaining
                                     map(record.locations, (obj) => (
-                                            obj?.place?.locality && <Item key={get(obj, 'place.locality')}>{get(obj, 'place.locality')}</Item>
+                                            obj && obj.place && obj.place.locality && <Item key={get(obj, 'place.locality')}>{get(obj, 'place.locality')}</Item>
                                         ))
                                 }
                             </Menu>
