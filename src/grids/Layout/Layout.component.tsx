@@ -1,8 +1,8 @@
 import React, { FC, lazy, memo } from 'react';
 
 import { AppLayoutInterface } from './interfaces';
-import LazyLoad from 'components/Lazy/Lazy.component';
 import PageLayout from './Layout.style';
+import LazyLoad from 'components/Lazy/Lazy.component';
 
 const Sidebar = lazy(() => import('components/PageSidebar/PageSidebar.component'));
 const Content = lazy(() => import('components/PageContent/PageContent.component'));

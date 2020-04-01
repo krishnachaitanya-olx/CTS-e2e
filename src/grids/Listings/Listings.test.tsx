@@ -1,7 +1,7 @@
+import { MockedProvider } from '@apollo/react-testing';
+import { render, waitFor } from '@testing-library/react';
 import React from 'react';
 import ListingGrid from './Listings.component';
-import { render, waitFor } from '@testing-library/react';
-import { MockedProvider } from '@apollo/react-testing';
 import jobsQuery from 'pages/Jobs/Jobs.query';
 
 describe('ListingGrid', () => {
@@ -13,23 +13,23 @@ describe('ListingGrid', () => {
                     filters: {},
                     sort: 'modified__DESC',
                     first: 20,
-                    after: 0
-                }
+                    after: 0,
+                },
             },
-            error: new Error("I'm tired please don't send any requests")
+            error: new Error("I'm tired please don't send any requests"),
         };
 
         const { getByText } = render(
             <MockedProvider mocks={[errorMock]} addTypename={false}>
                 <ListingGrid
-                    title='jobs'
-                    dataSourceGql={{
-                        query: jobsQuery
+                  title='jobs'
+                  dataSourceGql={{
+                        query: jobsQuery,
                     }}
                 >
                     {}
                 </ListingGrid>
-            </MockedProvider>
+            </MockedProvider>,
         );
 
 
@@ -43,14 +43,14 @@ describe('ListingGrid', () => {
         const { getByLabelText } = render(
             <MockedProvider mocks={[]} addTypename={false}>
                 <ListingGrid
-                    title='jobs'
-                    dataSourceGql={{
-                        query: jobsQuery
+                  title='jobs'
+                  dataSourceGql={{
+                        query: jobsQuery,
                     }}
                 >
                     {}
                 </ListingGrid>
-            </MockedProvider>
+            </MockedProvider>,
         );
 
 

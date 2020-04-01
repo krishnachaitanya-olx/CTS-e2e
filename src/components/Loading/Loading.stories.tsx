@@ -8,4 +8,4 @@ export default {
 };
 
 // A spinning loader
-export const Spinner:FC<{}> = ()=> ( <Loading /> );
+export const Spinner: FC<{}> = () => (<Loading />);
