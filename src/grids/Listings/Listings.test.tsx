@@ -1,35 +1,39 @@
+import { MockedProvider } from '@apollo/react-testing';
+import { render, waitFor } from '@testing-library/react';
+import { gql } from 'apollo-boost';
 import React from 'react';
 import ListingGrid from './Listings.component';
-import { render, waitFor } from '@testing-library/react';
-import { MockedProvider } from '@apollo/react-testing';
-import jobsQuery from 'pages/Jobs/Jobs.query';
 
 describe('ListingGrid', () => {
     it('should show error `Sorry, Server returned an error.` when request fails', async () => {
         const errorMock = {
             request: {
-                query: jobsQuery,
+                query: gql`query something {
+                    somefield
+                }`,
                 variables: {
                     filters: {},
                     sort: 'modified__DESC',
                     first: 20,
-                    after: 0
-                }
+                    after: 0,
+                },
             },
-            error: new Error("I'm tired please don't send any requests")
+            error: new Error("I'm tired please don't send any requests"),
         };
 
         const { getByText } = render(
             <MockedProvider mocks={[errorMock]} addTypename={false}>
                 <ListingGrid
-                    title='jobs'
-                    dataSourceGql={{
-                        query: jobsQuery
+                  title='jobs'
+                  dataSourceGql={{
+                        query: gql`query something {
+                            somefield
+                        }`,
                     }}
                 >
                     {}
                 </ListingGrid>
-            </MockedProvider>
+            </MockedProvider>,
         );
 
 
@@ -43,16 +47,17 @@ describe('ListingGrid', () => {
         const { getByLabelText } = render(
             <MockedProvider mocks={[]} addTypename={false}>
                 <ListingGrid
-                    title='jobs'
-                    dataSourceGql={{
-                        query: jobsQuery
+                  title='jobs'
+                  dataSourceGql={{
+                        query: gql`query something {
+                            somefield
+                        }`,
                     }}
                 >
                     {}
                 </ListingGrid>
-            </MockedProvider>
+            </MockedProvider>,
         );
-
 
         await waitFor(() => {
             expect(getByLabelText('loading-skeleton')).toBeTruthy();

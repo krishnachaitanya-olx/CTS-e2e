@@ -73,6 +73,7 @@
     "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
     "test:coverage": "npm test -- --coverage",
     "generate:type-doc": "npx typedoc",
+    "lint": "eslint --fix src/**/**.ts?",
     "lint:css": "stylelint './src/**/*.tsx'",
     "test:staged": "cross-env CI=true react-scripts test --env=jsdom --findRelatedTests"
   },

@@ -1,8 +1,8 @@
+import { Layout } from 'antd';
 import React, { FC, memo } from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 import { AppLayoutInterface } from './interfaces';
-import { Layout } from 'antd';
 import PageGrid from 'grids/PageGrid/PageGrid.component';
 
 const { Content } = Layout;
