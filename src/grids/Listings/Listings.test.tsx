@@ -1,14 +1,16 @@
 import { MockedProvider } from '@apollo/react-testing';
 import { render, waitFor } from '@testing-library/react';
+import { gql } from 'apollo-boost';
 import React from 'react';
 import ListingGrid from './Listings.component';
-import jobsQuery from 'pages/Jobs/Jobs.query';
 
 describe('ListingGrid', () => {
     it('should show error `Sorry, Server returned an error.` when request fails', async () => {
         const errorMock = {
             request: {
-                query: jobsQuery,
+                query: gql`query something {
+                    somefield
+                }`,
                 variables: {
                     filters: {},
                     sort: 'modified__DESC',
@@ -24,7 +26,9 @@ describe('ListingGrid', () => {
                 <ListingGrid
                   title='jobs'
                   dataSourceGql={{
-                        query: jobsQuery,
+                        query: gql`query something {
+                            somefield
+                        }`,
                     }}
                 >
                     {}
@@ -45,14 +49,15 @@ describe('ListingGrid', () => {
                 <ListingGrid
                   title='jobs'
                   dataSourceGql={{
-                        query: jobsQuery,
+                        query: gql`query something {
+                            somefield
+                        }`,
                     }}
                 >
                     {}
                 </ListingGrid>
             </MockedProvider>,
         );
-
 
         await waitFor(() => {
             expect(getByLabelText('loading-skeleton')).toBeTruthy();

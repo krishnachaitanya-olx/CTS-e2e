@@ -19,13 +19,13 @@ const { Item } = Menu;
 
 export const JobColumn: FC<Columns> = memo(
     ({ record }) => (
-        <Row>
+        <Row data-testid='job'>
             <Col span={24}>
                 <Title level={4} className='no-margin'>
                     { get(record, 'title', '') }
                 </Title>
             </Col>
-            <Col span={24}>
+            <Col data-testid='functional-area' span={24}>
                 <Text type='secondary'>
                     { get(record, 'functional_area.name', '') }
                 </Text>
@@ -33,7 +33,7 @@ export const JobColumn: FC<Columns> = memo(
             {
                 get(record, 'stage', '') !== 'APPROVED'
                 && (
-                    <Col span={24}>
+                    <Col data-testid='stage' span={24}>
                         <Text type='danger'>
                             { get(record, 'stage', '') }
                         </Text>
@@ -43,7 +43,7 @@ export const JobColumn: FC<Columns> = memo(
             {
                 get(record, 'state', '') !== 'OPEN'
                 && (
-                    <Col span={24}>
+                    <Col data-testid='state' span={24}>
                         <Text type='danger'>
                             { get(record, 'state', '') }
                         </Text>
@@ -98,25 +98,25 @@ export const JobColumn: FC<Columns> = memo(
 
 export const CompanyColumn: FC<Columns> = memo(
     ({ record }) => (
-        <Row>
+        <Row data-testid='company'>
             <Col span={24}>
-                <Text>
+                <Text data-testid='organization-popular-name'>
                     {get(record, 'organization.popular_name', '')}
                 </Text>
             </Col>
-            <Col span={24}>
+            <Col data-testid='organization-name' span={24}>
                 <Text ellipsis>
                     {get(record, 'organization.name', '')}
                 </Text>
             </Col>
             <Col span={24} style={{ marginTop: '1em' }}>
-                <Text style={{ color: get(record, 'pricing_plan_type', '') === 'TEMP_STAFFING' ? '#29c3c3' : '#db3361' }}>
+                <Text data-testid='pricing' style={{ color: get(record, 'pricing_plan_type', '') === 'TEMP_STAFFING' ? '#29c3c3' : '#db3361' }}>
                     ●
                     {' '}
                     {get(record, 'pricing_plan_type', '')}
                 </Text>
                 -
-                <Text>
+                <Text data-testid='contract'>
                     {get(record, 'contract_type', '')}
                 </Text>
             </Col>
@@ -130,6 +130,7 @@ const Slots: FC<Columns> = memo(({ record }) => {
             <Button
               type='link'
               className='no-padding'
+              data-testid='recent-slot'
               icon={
                 <CalendarTwoTone twoToneColor='#fa9f34' />
               }
@@ -144,6 +145,7 @@ const Slots: FC<Columns> = memo(({ record }) => {
         <Button
           type='link'
           className='no-padding'
+          data-testid='recent-slot'
           disabled
           icon={
             <CalendarTwoTone twoToneColor='grey' />
@@ -156,8 +158,8 @@ const Slots: FC<Columns> = memo(({ record }) => {
 
 export const JobTypeColumn: FC<Columns> = memo(
     ({ record }) => (
-        <Row>
-            <Col span={24}>
+        <Row data-testid='job-type-column'>
+            <Col data-testid='client-approval' span={24}>
                 <Tooltip
                   title={get(record, 'client_approval_required', false) ? 'Client approval required' : 'Client approval not required'}
                   placement='bottom'
@@ -174,7 +176,7 @@ export const JobTypeColumn: FC<Columns> = memo(
             {
                 get(record, 'is_screening_required', false)
                 && (
-                    <Col span={24}>
+                    <Col data-testid='screening' span={24}>
                         <Button
                           type='link'
                           className='no-padding'
@@ -191,7 +193,7 @@ export const JobTypeColumn: FC<Columns> = memo(
                 !get(record, 'is_screening_required')
                 && !get(record, 'client_approval_required')
                 && (
-                    <Col span={24}>
+                    <Col data-testid='screening' span={24}>
                         <Button
                           type='link'
                           className='no-padding'
@@ -207,7 +209,7 @@ export const JobTypeColumn: FC<Columns> = memo(
             {
                 get(record, 'is_resume_subscribed')
                 && (
-                    <Col span={24}>
+                    <Col data-testid='resume' span={24}>
                         <Button
                           type='link'
                           className='no-padding'
@@ -236,7 +238,7 @@ export const OpeningsColumn: FC<Columns> = memo(
                         <Col span={24} style={{ textAlign: 'left' }}>
                             <Text>VACANCIES </Text>
                         </Col>
-                        <Col span={20}>
+                        <Col data-testid='vacancies' span={20}>
                             <Text strong style={{ float: 'left' }}>
                                 {get(record, 'vacancies', '')}
                             </Text>
@@ -256,8 +258,9 @@ export const OpeningsColumn: FC<Columns> = memo(
                             ? (
                             <Menu>
                                 {
+                                    // TODO: replace with optional chaining
                                     map(record.locations, (obj) => (
-                                            obj?.place?.locality && <Item key={get(obj, 'place.locality')}>{get(obj, 'place.locality')}</Item>
+                                            obj && obj.place && obj.place.locality && <Item key={get(obj, 'place.locality')}>{get(obj, 'place.locality')}</Item>
                                         ))
                                 }
                             </Menu>
@@ -298,7 +301,7 @@ export const OpeningsColumn: FC<Columns> = memo(
                     </Col>
                 )
             }
-            <Col span={24} style={{ marginTop: '1em' }}>
+            <Col data-testid='education-and-experience' span={24} style={{ marginTop: '1em' }}>
                 <Text strong>Edu: </Text>
                 { get(record, 'expectation.degree_requirements.degree.name', 'NA') }
                 {' | '}
@@ -309,18 +312,18 @@ export const OpeningsColumn: FC<Columns> = memo(
                 }
                 {
                     get(record, 'expectation.work_exp_requirements.min_experience', 'NA') > 11
-                    ? `${get(record, 'expectation.work_exp_requirements.min_experience', 'NA') * 0.0833334} yrs - `
+                    ? `${(get(record, 'expectation.work_exp_requirements.min_experience', 'NA') * 0.0833334).toFixed(2)} yrs - `
                     : get(record, 'expectation.work_exp_requirements.min_experience', null)
                     && `${get(record, 'expectation.work_exp_requirements.min_experience', 'NA')} mo - `
                 }
                 {
                     get(record, 'expectation.work_exp_requirements.max_experience', 'NA') > 11
-                    ? `${get(record, 'expectation.work_exp_requirements.max_experience', 'NA') * 0.0833334} yrs`
+                    ? `${(get(record, 'expectation.work_exp_requirements.max_experience', 'NA') * 0.0833334).toFixed(2)} yrs`
                     : get(record, 'expectation.work_exp_requirements.max_experience', null)
                     && `${get(record, 'expectation.work_exp_requirements.max_experience', 'NA')} mo`
                 }
             </Col>
-            <Col span={24}>
+            <Col data-testid='salary' span={24}>
                 <Text strong>Salary: </Text>
                 {
                     numberSuffix(get(record, 'offer.min_offered_salary'))
@@ -342,7 +345,7 @@ export const ImportantPeopleColumn: FC<Columns> = memo(
     ({ record }) => (
         <Row>
             <Col span={24}>
-                <Row gutter={8}>
+                <Row data-testid='important-people-cse' gutter={8}>
                     <Col>
                         <Text strong>CSE  </Text>
                     </Col>
@@ -356,7 +359,7 @@ export const ImportantPeopleColumn: FC<Columns> = memo(
                 </Row>
             </Col>
             <Col span={24}>
-                <Row gutter={8}>
+                <Row data-testid='important-people-kam' gutter={8}>
                     <Col>
                         <Text strong>KAM  </Text>
                     </Col>
@@ -370,7 +373,7 @@ export const ImportantPeopleColumn: FC<Columns> = memo(
                 </Row>
             </Col>
             <Col span={24}>
-                <Row gutter={8}>
+                <Row data-testid='important-people-gfi' gutter={8}>
                     <Col>
                         <Text strong>GFI  </Text>
                     </Col>
