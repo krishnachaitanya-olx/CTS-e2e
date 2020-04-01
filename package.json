@@ -86,11 +86,6 @@
       "git add"
     ]
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "npm run test:coverage"
-    }
-  },
   "browserslist": {
     "production": [
       ">0.2%",
