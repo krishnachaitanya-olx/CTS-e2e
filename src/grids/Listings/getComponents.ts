@@ -6,9 +6,10 @@ import {
     random,
 } from 'lodash';
 import { ReactNode, cloneElement } from 'react';
+import ListingSearch from '../../components/ListingSearch/ListingSearch.component';
+import ListingTable from '../../components/ListingTable/ListingTable.component';
 import { ListingGqlData } from './interfaces';
-import ListingSearch from 'components/ListingSearch/ListingSearch.component';
-import ListingTable from 'components/ListingTable/ListingTable.component';
+
 
 const getComponent = (
     childrenProps: ReactNode,

@@ -1,6 +1,6 @@
 import { Skeleton } from 'antd';
 import React, { FC, memo, ReactNode } from 'react';
-import Table from 'components/ListingTable/ListingTable.component';
+import Table from '../../components/ListingTable/ListingTable.component';
 
 const { Button } = Skeleton;
 

@@ -7,7 +7,7 @@ import {
 } from 'antd';
 import { get, map } from 'lodash';
 import React, { FC, memo } from 'react';
-import numberSuffix from 'utils/salary/numberSuffix';
+import numberSuffix from '../../utils/salary/numberSuffix';
 
 interface Columns {
     text: string;
