@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-
 import Loading from './Loading.component';
 
 export default {
@@ -8,4 +7,4 @@ export default {
 };
 
 // A spinning loader
-export const Spinner: FC<{}> = () => (<Loading />);
+export const Spinner: FC = () => (<Loading />);
