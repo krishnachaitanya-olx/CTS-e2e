@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   stories: ['../src/**/*.stories.(js|mdx|tsx)'],
   addons: [
@@ -7,4 +9,13 @@ module.exports = {
     '@storybook/addon-docs',
     '@storybook/addon-viewport/register'
   ],
+
+  webpackFinal: (config) => {
+    config.resolve.modules = [
+      ...(config.resolve.modules || []),
+      path.resolve(__dirname, "../src"),
+    ];
+
+    return config;
+  },
 };
