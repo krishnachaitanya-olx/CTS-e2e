@@ -1,6 +1,5 @@
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { addParameters } from '@storybook/react';
-// import '../src/antd.customize.less';
 import 'antd/dist/antd.less';
 
 addParameters({
