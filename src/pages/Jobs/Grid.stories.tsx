@@ -1,10 +1,10 @@
 import { MockedProvider, MockedResponse } from '@apollo/react-testing';
 import React, { FC } from 'react';
-import Table from 'components/ListingTable/ListingTable.component';
-import Grid from 'grids/Listings/Listings.component';
 import mockData from './Jobs.fixture';
 import jobsQuery from './Jobs.query';
 import columns from './JobsColumns.schema';
+import Table from 'components/ListingTable/ListingTable.component';
+import Grid from 'grids/Listings/Listings.component';
 
 const successMock: MockedResponse = {
     request: {
