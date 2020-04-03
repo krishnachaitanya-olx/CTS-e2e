@@ -4,10 +4,10 @@ import {
 } from 'antd';
 import { gql } from 'apollo-boost';
 import React, { memo, FC } from 'react';
-import ListSkelton from 'assests/skeltons/ListingSkelton.component';
 import getComponent from './getComponents';
 import { ListingInterface } from './interfaces';
 import { PageLayout } from './Styles.styles';
+import ListSkelton from 'assests/skeltons/ListingSkelton.component';
 
 const {
  Content,
