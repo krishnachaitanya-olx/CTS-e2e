@@ -14,6 +14,7 @@ module.exports = {
     '@storybook/addon-actions',
     '@storybook/addon-links',
     '@storybook/addon-docs',
+    '@storybook/addon-viewport/register',
   ],
 
   // this is required to support imports like
