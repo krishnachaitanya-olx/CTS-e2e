@@ -4,7 +4,8 @@ module.exports = {
         'plugin:@typescript-eslint/recommended',  // Uses the recommended rules from @typescript-eslint/eslint-plugin
         'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'airbnb-typescript',
-        'airbnb/hooks'
+        'airbnb/hooks',
+        'plugin:you-dont-need-lodash-underscore/compatible'
     ],
     parserOptions: {
         ecmaVersion: 2018,  // Allows for the parsing of modern ECMAScript features
