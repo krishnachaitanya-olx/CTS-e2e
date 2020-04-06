@@ -1,0 +1,34 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import TableSkelton from './TableSkelton.component';
+
+<Meta title="Skeltons/table" component={TableSkelton} />
+
+# Table Skelton
+
+Display a Skelton when you are fetching async table
+
+## Example
+```jsx
+import React, { FC, useState, useEffect } from 'react';
+import TableSkelton from 'assets/skeltons/ListingSkelton.component';
+
+const MyComponent: FC<{}> = () => {
+    const [data, setData] = useState();
+    
+    useEffect(() => {
+        fetch('https://some-url/endpoint')
+        .then(res => res.json())
+        .then(res => setData(res.data));
+    }, []);
+
+    return (
+        <TableSkelton /> && <p>Hi {data.name}</p>
+    );
+}
+```
+
+<Preview>
+  <Story name="default">
+    <TableSkelton />
+  </Story>
+</Preview>

@@ -1,0 +1,35 @@
+import { FC } from 'react';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import Lazy from './Lazy.component';
+
+<Meta title="Lazy" component={Lazy} />
+
+# Lazy
+
+Lazy load any component with ease, read more about lazy loading [here](https://reactjs.org/docs/code-splitting.html). This will also show a nice little loader while the component is being downloaded through the wire.
+
+## Example
+```jsx
+import React, { FC, lazy } from 'react';
+import Lazy from 'components/Lazy/Lazy.component';
+
+const MyLazyComponent = lazy(() => import('./LazyComponent'));
+
+const App: FC<{}> = () => {
+    return (
+        <Lazy>
+            <MyLazyComponent />
+        </Lazy>
+    );
+}
+```
+
+export const MyLazyComponent = () => <p>I'm lazy loaded!</p>;
+
+<Preview>
+  <Story name="default">
+    <Lazy>
+        <MyLazyComponent />
+    </Lazy>
+  </Story>
+</Preview>

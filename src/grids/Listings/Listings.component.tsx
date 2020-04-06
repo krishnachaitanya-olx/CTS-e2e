@@ -4,7 +4,7 @@ import {
 } from 'antd';
 import { gql } from 'apollo-boost';
 import React, { memo, FC } from 'react';
-import getComponent from './getComponents.new';
+import getComponent from './getComponents';
 import { ListingInterface } from './interfaces';
 import { PageLayout } from './Styles.styles';
 import ListSkelton from 'assests/skeltons/ListingSkelton.component';
