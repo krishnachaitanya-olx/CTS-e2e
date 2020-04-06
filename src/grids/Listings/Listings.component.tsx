@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/react-hooks';
 import {
- Layout, PageHeader, Row, Col,
+ Layout, PageHeader, Row, Col, Result,
 } from 'antd';
 import { gql } from 'apollo-boost';
 import React, { memo, FC } from 'react';
-import dummyData from './dummyData';
+// import dummyData from './dummyData';
 import getComponent from './getComponents';
 import { ListingInterface } from './interfaces';
 import { PageLayout } from './Styles.styles';
@@ -35,17 +35,16 @@ const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) =
       </div>
     );
   }
-  console.log('coming in listing', error, data);
-  // if (error) {
-  //   return (
-  //     <Result
-  //       status='500'
-  //       title='500'
-  //       subTitle='Sorry, Server returned an error.'
-  //     />
-  //   );
-  // }
-  const [Table, Search] = getComponent(children, dummyData);
+  if (error) {
+    return (
+      <Result
+        status='500'
+        title='500'
+        subTitle='Sorry, Server returned an error.'
+      />
+    );
+  }
+  const [Table, Search] = getComponent(children, data);
   return (
     <PageLayout>
       <PageHeader
