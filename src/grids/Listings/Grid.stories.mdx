@@ -1,0 +1,91 @@
+import { MockedProvider } from '@apollo/react-testing';
+import { FC } from 'react';
+import columns from './fixtures/sample.columns';
+import mockData from './fixtures/sample.data';
+import jobsQuery from './fixtures/sample.query';
+import Table from 'components/ListingTable/ListingTable.component';
+import Grid from 'grids/Listings/Listings.component';
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+
+export const successMock = {
+    request: {
+        query: jobsQuery,
+        variables: {
+            filters: {},
+            sort: 'modified__DESC',
+            first: 20,
+            after: 0,
+        },
+    },
+    result: {
+        data: mockData,
+    },
+};
+
+<Meta title="Grid" component={Grid} />
+
+# Grid
+
+Grid component allows you to query data using a **graphql** query and render them in a table format as you desire. By itself Grid component has no idea on which format to render the data as a table, so we need to provide the schema/format as JavaScript object to the **columns** prop, a sample column schema is shown below.
+
+```js
+const columns = [
+    {
+        title: 'Job',
+        key: 'Job',
+        render:
+            (text: string, record: any): ReactNode => <JobColumn text={text} record={record} />,
+        width: '25%',
+    },
+    ...
+];
+```
+
+## Example
+```jsx
+import React from 'react';
+import Grid from 'grids/Listings/Listings.component';
+import jobsQuery from './Jobs.Query';
+import comlumns from './Jobs.columns';
+
+const App: FC<{}> = () => {
+    return (
+        <Grid
+          title='Jobs'
+          dataSourceGql={{
+              query: jobsQuery,
+            }}
+        >
+            <Table
+              columns={columns}
+              className='listing-table'
+            />
+        </Grid>
+    );
+}
+```
+
+<Preview>
+  <Story name="default">
+    <MockedProvider
+      mocks={[successMock]}
+      addTypename={false}
+      defaultOptions={{
+        watchQuery: { fetchPolicy: 'no-cache' },
+        query: { fetchPolicy: 'no-cache' },
+    }}
+    >
+        <Grid
+          title='Jobs'
+          dataSourceGql={{
+              query: jobsQuery,
+            }}
+        >
+            <Table
+              columns={columns}
+              className='listing-table'
+            />
+        </Grid>
+    </MockedProvider>
+  </Story>
+</Preview>

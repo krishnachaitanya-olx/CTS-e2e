@@ -2,7 +2,7 @@ import {
  Skeleton, Layout, PageHeader, Row, Col,
 } from 'antd';
 import React, { FC, memo } from 'react';
-import TableSkelton from 'assests/skeltons/TableSkelton.component';
+import TableSkelton from './TableSkelton.component';
 
 const { Button, Input } = Skeleton;
 const { Content } = Layout;
