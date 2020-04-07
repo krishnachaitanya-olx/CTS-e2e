@@ -1,117 +1,126 @@
-/* eslint-disable */
-import React, { useState, useEffect, useRef, FC, memo } from 'react';
-import { VariableSizeGrid as Grid } from 'react-window';
-import ResizeObserver from 'rc-resize-observer';
-import classNames from 'classnames';
 import { Table } from 'antd';
+import { TableProps } from 'antd/lib/table';
+import classNames from 'classnames';
+import ResizeObserver from 'rc-resize-observer';
+import React, { useState, useEffect, useRef } from 'react';
+import { VariableSizeGrid as Grid } from 'react-window';
 import './VirtualTable.style.css';
-import { TableProps, ColumnsType } from 'antd/lib/table';
-import { mergedColumns } from './utils';
+import { getColsWidthFromPercentage } from './utils';
 
-/* eslint-disable */
-const VirtualTable: FC<TableProps<any>> = ({
-  className,
-  columns,
-  pagination,
-  scroll,
-  dataSource,
-  ...rest
-}) => {
-  const [tableWidth, setTableWidth] = useState(0);
-  const virtualTableColumns: ColumnsType<object> = mergedColumns(columns, tableWidth);
-
-  const gridRef = useRef<any>();
-  const [connectObject] = useState<any>(() => {
-    const obj = {};
-    Object.defineProperty(obj, 'scrollLeft', {
-      get: () => null,
-      set: (scrollLeft: number) => {
-        if (gridRef.current) {
-          gridRef.current.scrollTo({ scrollLeft });
-        }
-      },
+function VirtualTable({
+    columns,
+    scroll,
+    className,
+    ...rest
+}: TableProps<any>) {
+    const [tableWidth, setTableWidth] = useState(0);
+    const [colsWithFixedWidth, setColsWithFixedWidth] = useState<
+        Record<string, any>[]
+    >([]);
+    const gridRef = useRef<Grid>();
+    const [connectObject] = useState(() => {
+        const obj = {};
+        Object.defineProperty(obj, 'scrollLeft', {
+            get: () => null,
+            set: (scrollLeft: number) => {
+                if (gridRef.current) {
+                    gridRef.current.scrollTo({
+                        scrollLeft,
+                    } as any);
+                }
+            },
+        });
+        return obj;
     });
 
-    return obj;
-  });
+    const resetVirtualGrid = () => {
+        gridRef.current?.resetAfterIndices({
+            rowIndex: 0,
+            columnIndex: 0,
+            shouldForceUpdate: false,
+        });
+    };
 
+    useEffect(() => resetVirtualGrid, []);
+    useEffect(() => resetVirtualGrid, [tableWidth]);
 
-  const resetVirtualGrid = () => {
-    gridRef.current?.resetAfterIndices({
-      columnIndex: 0,
-      shouldForceUpdate: false
-    });
-  };
+    const renderVirtualList = (
+        rawData: Record<string, any>,
+        { scrollbarSize, ref, onScroll }: any,
+    ) => {
+        ref.current = connectObject;
+        const height: number = parseInt(`${scroll?.y}`, 10) || 100;
 
-  useEffect(() => resetVirtualGrid, []);
-  useEffect(() => resetVirtualGrid, [tableWidth]);
+        return (
+            <Grid
+              ref={gridRef as any}
+              className='virtual-grid'
+              columnCount={colsWithFixedWidth.length}
+              columnWidth={(index) => {
+                    const { width } = colsWithFixedWidth[index];
+                    return index === colsWithFixedWidth.length - 1
+                        ? width - scrollbarSize - 1
+                        : width;
+                }}
+              height={height}
+              rowCount={rawData.length}
+              rowHeight={() => 170}
+              width={tableWidth}
+              onScroll={({ scrollLeft }) => {
+                    onScroll({
+                        scrollLeft,
+                    });
+                }}
+            >
+                {({ columnIndex, rowIndex, style }) => {
+                    const row = rawData[rowIndex];
+                    const col = colsWithFixedWidth[columnIndex] as any;
+                    const renderFn = col.render;
+                    const result = renderFn ? renderFn(row, row) : row;
 
-  const renderVirtualList = (rawData: Record<string, any>, { scrollbarSize, ref, onScroll }: any) => {
-    ref.current = connectObject;
-    const height: number = parseInt(`${scroll?.y}`, 10) || 100;
+                    return (
+                        <div
+                          className={classNames('virtual-table-cell', {
+                                'virtual-table-cell-last':
+                                    columnIndex
+                                    === colsWithFixedWidth.length - 1,
+                            })}
+                          style={{
+                                ...style,
+                            }}
+                        >
+                            {result}
+                        </div>
+                    );
+                }}
+            </Grid>
+        );
+    };
 
     return (
-      <Grid
-        ref={gridRef}
-        className='virtual-grid'
-        columnCount={virtualTableColumns.length}
-        columnWidth={index => {
-          const { width }: any = virtualTableColumns[index];
-          return index === virtualTableColumns.length - 1
-            ? width - scrollbarSize - 1
-            : width;
-        }}
-        height={height}
-        rowCount={rawData.length}
-        rowHeight={() => 54}
-        width={tableWidth}
-        onScroll={({ scrollLeft }) => {
-          onScroll({
-            scrollLeft
-          });
-        }}
-      >
-        {({ columnIndex, rowIndex, style }) => {
-          const row = rawData[rowIndex];
-          const col = virtualTableColumns[columnIndex] as any;
-          const renderFn = col.render;
-          const record = row[col.dataIndex];
-          const result = renderFn? renderFn(record): record;
-
-          return (
-            <div
-              className={classNames('virtual-table-cell', {
-                'virtual-table-cell-last':
-                  columnIndex === virtualTableColumns.length - 1
-              })}
-              style={style}
-            >
-              <p>hello</p>
-            </div>
-          );
-        }}
-      </Grid>
+        <ResizeObserver
+          onResize={({ width }: { width: number }): void => {
+                setTableWidth(width);
+                if (columns) {
+                    setColsWithFixedWidth(
+                        getColsWidthFromPercentage(columns, width),
+                    );
+                }
+            }}
+        >
+            {/* eslint-disable react/jsx-props-no-spreading */}
+            <Table
+              {...rest}
+              scroll={scroll}
+              className={classNames(className, 'virtual-table')}
+              columns={colsWithFixedWidth}
+              pagination={false}
+              components={{
+                    body: renderVirtualList,
+                }}
+            />
+        </ResizeObserver>
     );
-  };
-
-  return (
-    <ResizeObserver
-      onResize={({ width }) => {
-        setTableWidth(width);
-      }}
-    >
-      <Table
-        {...rest}
-        className={classNames(className, 'virtual-table')}
-        columns={virtualTableColumns}
-        pagination={pagination}
-        components={{
-          body: renderVirtualList,
-        }}
-        dataSource={dataSource}
-      />
-    </ResizeObserver>
-  );
 }
 
 export default VirtualTable;
