@@ -86,6 +86,8 @@ const VirtualTable: FC<TableProps<any>> = ({
                                 'virtual-table-cell-last':
                                     columnIndex
                                     === colsWithFixedWidth.length - 1,
+                            }, {
+                                'virtual-table-cell-first': columnIndex === 0,
                             })}
                           style={{
                                 ...style,

@@ -12,6 +12,14 @@
     background: #FFF;
 }
 
+.virtual-table-cell-first {
+    border-left: 0;
+}
+
+.virtual-table-cell-last {
+    border-bottom: 0;
+}
+
 [data-theme="dark"]  .virtual-table-cell {
     box-sizing: border-box;
     padding: 16px;

@@ -3,7 +3,7 @@ export const getColsWidthFromPercentage = (
     tableWidth: number,
 ): Record<string, any>[] => columns.map((column) => ({
         ...column,
-        width: Math.ceil((tableWidth * parseInt(column.width, 10)) / 100),
+        width: Math.floor((tableWidth * parseInt(column.width, 10)) / 100),
     }));
 
 export default {};
