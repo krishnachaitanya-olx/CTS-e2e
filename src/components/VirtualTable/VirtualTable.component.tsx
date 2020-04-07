@@ -3,7 +3,7 @@ import { TableProps } from 'antd/lib/table';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
 import React, {
- useState, useEffect, useRef, FC, memo,
+ useState, useEffect, useRef, FC, memo, ReactElement,
 } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import './VirtualTable.style.css';
@@ -19,7 +19,7 @@ const VirtualTable: FC<TableProps<any>> = ({
     const [colsWithFixedWidth, setColsWithFixedWidth] = useState<
         Record<string, any>[]
     >([]);
-    const gridRef = useRef<Grid>();
+    const gridRef = useRef<Grid>(null);
     const [connectObject] = useState(() => {
         const obj = {};
         Object.defineProperty(obj, 'scrollLeft', {
@@ -35,7 +35,7 @@ const VirtualTable: FC<TableProps<any>> = ({
         return obj;
     });
 
-    const resetVirtualGrid = () => {
+    const resetVirtualGrid = (): void => {
         gridRef.current?.resetAfterIndices({
             rowIndex: 0,
             columnIndex: 0,
@@ -49,16 +49,16 @@ const VirtualTable: FC<TableProps<any>> = ({
     const renderVirtualList = (
         rawData: Record<string, any>,
         { scrollbarSize, ref, onScroll }: any,
-    ) => {
+    ): ReactElement => {
         ref.current = connectObject;
         const height: number = parseInt(`${scroll?.y}`, 10) || 100;
 
         return (
             <Grid
-              ref={gridRef as any}
+              ref={gridRef}
               className='virtual-grid'
               columnCount={colsWithFixedWidth.length}
-              columnWidth={(index) => {
+              columnWidth={(index): number => {
                     const { width } = colsWithFixedWidth[index];
                     return index === colsWithFixedWidth.length - 1
                         ? width - scrollbarSize - 1
@@ -66,17 +66,17 @@ const VirtualTable: FC<TableProps<any>> = ({
                 }}
               height={height}
               rowCount={rawData.length}
-              rowHeight={() => 170}
+              rowHeight={(): number => 170}
               width={tableWidth}
-              onScroll={({ scrollLeft }) => {
+              onScroll={({ scrollLeft }): void => {
                     onScroll({
                         scrollLeft,
                     });
                 }}
             >
-                {({ columnIndex, rowIndex, style }) => {
+                {({ columnIndex, rowIndex, style }): ReactElement => {
                     const row = rawData[rowIndex];
-                    const col = colsWithFixedWidth[columnIndex] as any;
+                    const col = colsWithFixedWidth[columnIndex];
                     const renderFn = col.render;
                     const result = renderFn ? renderFn(row, row) : row;
 
@@ -109,7 +109,6 @@ const VirtualTable: FC<TableProps<any>> = ({
                     setColsWithFixedWidth(
                         getColsWidthFromPercentage(columns, width),
                     );
-                    console.log(width, getColsWidthFromPercentage(columns, width));
                 }
             }}
         >
