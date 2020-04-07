@@ -4,19 +4,14 @@ import { VariableSizeGrid as Grid } from 'react-window';
 import ResizeObserver from 'rc-resize-observer';
 import classNames from 'classnames';
 import { Table } from 'antd';
+import './VirtualTable.style.css';
 
 /* eslint-disable */
 function VirtualTable(props: any) {
   const { columns, scroll, className } = props;
   const [tableWidth, setTableWidth] = useState(0);
-  const widthColumnCount = columns.filter(({ width }: any) => !width).length;
-  const mergedColumns = columns.map((column: any) => {
-    if (column.width) {
-      return column;
-    }
-
-    return { ...column, width: Math.floor(tableWidth / widthColumnCount) };
-  });
+  const mergedColumns = columns;
+  console.log(mergedColumns);
   const gridRef = useRef();
   const [connectObject] = useState(() => {
     const obj = {};
@@ -58,7 +53,7 @@ function VirtualTable(props: any) {
         }}
         height={scroll.y}
         rowCount={rawData.length}
-        rowHeight={() => 54}
+        rowHeight={() => 170}
         width={tableWidth}
         onScroll={({ scrollLeft }) => {
           onScroll({
@@ -66,17 +61,29 @@ function VirtualTable(props: any) {
           });
         }}
       >
-        {({ columnIndex, rowIndex, style }) => (
-          <div
-            className={classNames('virtual-table-cell', {
-              'virtual-table-cell-last':
-                columnIndex === mergedColumns.length - 1
-            })}
-            style={style}
-          >
-            {rawData[rowIndex][mergedColumns[columnIndex].dataIndex]}
-          </div>
-        )}
+        {({ columnIndex, rowIndex, style }) => {
+          const row = rawData[rowIndex];
+          const col = mergedColumns[columnIndex] as any;
+          const renderFn = col.render;
+          const result = renderFn? renderFn(row, row): row;
+
+          return (
+            <div style={{position: 'relative', width: '100%'}}>
+              <div
+              className={classNames('virtual-table-cell', {
+                'virtual-table-cell-last':
+                  columnIndex === mergedColumns.length - 1
+              })}
+              style={{
+                ...style,
+                width: '10%'
+              }}
+              >
+              {result}
+            </div>
+            </div>
+          );
+          }}
       </Grid>
     );
   };
@@ -95,46 +102,10 @@ function VirtualTable(props: any) {
         components={{
           body: renderVirtualList,
         }}
+        width={tableWidth}
       />
     </ResizeObserver>
   );
-} // Usage
-
-const columns = [
-  {
-    title: 'A',
-    dataIndex: 'key',
-    width: 150
-  },
-  {
-    title: 'B',
-    dataIndex: 'key'
-  },
-  {
-    title: 'C',
-    dataIndex: 'key'
-  },
-  {
-    title: 'D',
-    dataIndex: 'key'
-  },
-  {
-    title: 'E',
-    dataIndex: 'key',
-    width: 200
-  },
-  {
-    title: 'F',
-    dataIndex: 'key',
-    width: 100
-  }
-];
-const data: any = [];
-
-for (let i = 0; i < 999; i += 1) {
-  data.push({
-    key: i
-  });
 }
 
-export default () => <VirtualTable columns={columns} dataSource={data} scroll={{ y: 300, x: '100vw' }} />;
+export default VirtualTable;

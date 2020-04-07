@@ -1,24 +1,25 @@
-import { Table } from 'antd';
-import { ColumnsType, TableProps } from 'antd/lib/table';
-
-import ResizeObserver from 'rc-resize-observer';
-import React, {
-  memo, useState, FC, useRef, useEffect, ReactElement,
-} from 'react';
+/* eslint-disable */
+import React, { useState, useEffect, useRef, FC, memo } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
-import { VirualTableProps } from './interfaces';
+import ResizeObserver from 'rc-resize-observer';
+import classNames from 'classnames';
+import { Table } from 'antd';
+import './VirtualTable.style.css';
+import { TableProps, ColumnsType } from 'antd/lib/table';
 import { mergedColumns } from './utils';
 
-const VirtalTable: FC<TableProps<any> & VirualTableProps> = ({
+/* eslint-disable */
+const VirtualTable: FC<TableProps<any>> = ({
   className,
   columns,
   pagination,
   scroll,
   dataSource,
-  Template,
-}: TableProps<any> & VirualTableProps) => {
+  ...rest
+}) => {
   const [tableWidth, setTableWidth] = useState(0);
   const virtualTableColumns: ColumnsType<object> = mergedColumns(columns, tableWidth);
+
   const gridRef = useRef<any>();
   const [connectObject] = useState<any>(() => {
     const obj = {};
@@ -34,66 +35,83 @@ const VirtalTable: FC<TableProps<any> & VirualTableProps> = ({
     return obj;
   });
 
-  const resetVirtualGrid = (): void => {
-    if (gridRef && gridRef.current) {
-      gridRef.current.resetAfterIndices({
-        columnIndex: 0,
-        shouldForceUpdate: false,
-      });
-    }
+
+  const resetVirtualGrid = () => {
+    gridRef.current?.resetAfterIndices({
+      columnIndex: 0,
+      shouldForceUpdate: false
+    });
   };
 
   useEffect(() => resetVirtualGrid, []);
   useEffect(() => resetVirtualGrid, [tableWidth]);
 
-  const renderVirtualList = (
-    rawData: object[],
-    { scrollbarSize, ref, onScroll }: any,
-  ): ReactElement => {
+  const renderVirtualList = (rawData: Record<string, any>, { scrollbarSize, ref, onScroll }: any) => {
     ref.current = connectObject;
     const height: number = parseInt(`${scroll?.y}`, 10) || 100;
+
     return (
       <Grid
         ref={gridRef}
         className='virtual-grid'
         columnCount={virtualTableColumns.length}
-        columnWidth={(index: number): number => {
+        columnWidth={index => {
           const { width }: any = virtualTableColumns[index];
-          const size: number = width - scrollbarSize - 1;
-          if (index === virtualTableColumns.length - 1) {
-            return size;
-          }
-          return width;
+          return index === virtualTableColumns.length - 1
+            ? width - scrollbarSize - 1
+            : width;
         }}
         height={height}
         rowCount={rawData.length}
-        rowHeight={(): number => 54}
+        rowHeight={() => 54}
         width={tableWidth}
-        onScroll={({ scrollLeft }): void => {
-          onScroll({ scrollLeft });
+        onScroll={({ scrollLeft }) => {
+          onScroll({
+            scrollLeft
+          });
         }}
       >
-        {Template}
+        {({ columnIndex, rowIndex, style }) => {
+          const row = rawData[rowIndex];
+          const col = virtualTableColumns[columnIndex] as any;
+          const renderFn = col.render;
+          const record = row[col.dataIndex];
+          const result = renderFn? renderFn(record): record;
+
+          return (
+            <div
+              className={classNames('virtual-table-cell', {
+                'virtual-table-cell-last':
+                  columnIndex === virtualTableColumns.length - 1
+              })}
+              style={style}
+            >
+              <p>hello</p>
+            </div>
+          );
+        }}
       </Grid>
     );
   };
-  return (
-      <ResizeObserver
-        onResize={({ width }): void => {
-          setTableWidth(width);
-        }}
-      >
-          <Table
-            className={`virtual-table ${className || ''}`}
-            columns={virtualTableColumns}
-            pagination={pagination}
-            dataSource={dataSource}
-            components={{
-              body: renderVirtualList,
-            }}
-          />
-      </ResizeObserver>
-  );
-};
 
-export default memo(VirtalTable);
+  return (
+    <ResizeObserver
+      onResize={({ width }) => {
+        setTableWidth(width);
+      }}
+    >
+      <Table
+        {...rest}
+        className={classNames(className, 'virtual-table')}
+        columns={virtualTableColumns}
+        pagination={pagination}
+        components={{
+          body: renderVirtualList,
+        }}
+        dataSource={dataSource}
+      />
+    </ResizeObserver>
+  );
+}
+
+export default VirtualTable;

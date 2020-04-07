@@ -9,33 +9,33 @@ const columns = [
         key: 'Job',
         render:
             (text: string, record: any): ReactNode => <JobColumn text={text} record={record} />,
-        width: '25%',
+        width: '10%',
     },
     {
         title: 'Company',
         key: 'Company',
         render:
             (text: string, record: any): ReactNode => <CompanyColumn text={text} record={record} />,
-        width: '16%',
+        width: 200,
     },
     {
         title: 'Job type',
         key: 'Job type',
-        width: '16%',
+        width: 200,
         render:
         (text: string, record: any): ReactNode => <JobTypeColumn text={text} record={record} />,
     },
     {
         title: 'Openings',
         key: 'Openings',
-        width: '25%',
+        width: 200,
         render:
         (text: string, record: any): ReactNode => <OpeningsColumn text={text} record={record} />,
     },
     {
         title: 'Important people',
         key: 'Important people',
-        width: '16%',
+        width: 200,
         render:
             (
                 text: string, record: any,
