@@ -2,17 +2,19 @@ import { Table } from 'antd';
 import { TableProps } from 'antd/lib/table';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
-import React, { useState, useEffect, useRef } from 'react';
+import React, {
+ useState, useEffect, useRef, FC,
+} from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import './VirtualTable.style.css';
 import { getColsWidthFromPercentage } from './utils';
 
-function VirtualTable({
+const VirtualTable: FC<TableProps<any>> = ({
     columns,
     scroll,
     className,
     ...rest
-}: TableProps<any>) {
+}) => {
     const [tableWidth, setTableWidth] = useState(0);
     const [colsWithFixedWidth, setColsWithFixedWidth] = useState<
         Record<string, any>[]
@@ -121,6 +123,6 @@ function VirtualTable({
             />
         </ResizeObserver>
     );
-}
+};
 
 export default VirtualTable;

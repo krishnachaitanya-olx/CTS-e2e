@@ -1,7 +1,7 @@
 import React, { FC, lazy } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Lazy from 'components/Lazy/Lazy.component';
-import VirtualTableComponent from 'components/VirtualTable/VirtualTableNew.component';
+import VirtualTableComponent from 'components/VirtualTable/VirtualTable.component';
 import NotFound from 'pages/NotFoundPage/NotFoundPage.component';
 
 const JobPage = lazy(() => import('pages/Jobs/Jobs.component'));
