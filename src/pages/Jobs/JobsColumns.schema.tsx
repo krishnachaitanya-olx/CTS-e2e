@@ -9,7 +9,7 @@ const columns = [
         key: 'Job',
         render:
             (text: string, record: any): ReactNode => <JobColumn text={text} record={record} />,
-        width: '25%',
+        width: '26%',
     },
     {
         title: 'Company',
@@ -28,7 +28,7 @@ const columns = [
     {
         title: 'Openings',
         key: 'Openings',
-        width: '25%',
+        width: '26%',
         render:
         (text: string, record: any): ReactNode => <OpeningsColumn text={text} record={record} />,
     },

@@ -7,7 +7,6 @@ const dataSource = [
         key: '1',
         name: 'Mike',
         age: 32,
-        address: '10 Downing Street',
     },
 ];
 
@@ -16,16 +15,13 @@ const columns = [
         title: 'Name',
         dataIndex: 'name',
         key: 'name',
+        width: 200,
     },
     {
         title: 'Age',
         dataIndex: 'age',
         key: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
+        width: 200,
     },
 ];
 
@@ -39,22 +35,14 @@ describe('ListingTable', () => {
 
         expect(headers.item(0)).toHaveTextContent('Name');
         expect(headers.item(1)).toHaveTextContent('Age');
-        expect(headers.item(2)).toHaveTextContent('Address');
     });
 
     it('should render the data source', () => {
-        const { container } = render(
+        const { getByText } = render(
             <ListingTable dataSource={dataSource} columns={columns} />,
         );
 
-        const row = container.getElementsByTagName('tr').item(2);
-
-        if (row) {
-            const tds = row.getElementsByTagName('td');
-
-            expect(tds.item(0)).toHaveTextContent('Mike');
-            expect(tds.item(1)).toHaveTextContent('32');
-            expect(tds.item(2)).toHaveTextContent('10 Downing Street');
-        }
+        expect(getByText('Mike')).toBeTruthy();
+        expect(getByText('32')).toBeTruthy();
     });
 });
