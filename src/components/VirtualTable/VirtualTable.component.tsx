@@ -3,7 +3,7 @@ import { TableProps } from 'antd/lib/table';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
 import React, {
- useState, useEffect, useRef, FC,
+ useState, useEffect, useRef, FC, memo,
 } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import './VirtualTable.style.css';
@@ -84,8 +84,8 @@ const VirtualTable: FC<TableProps<any>> = ({
                         <div
                           className={classNames('virtual-table-cell', {
                                 'virtual-table-cell-last':
-                                    columnIndex
-                                    === colsWithFixedWidth.length - 1,
+                                    rowIndex
+                                    === rawData.length - 1,
                             }, {
                                 'virtual-table-cell-first': columnIndex === 0,
                             })}
@@ -109,6 +109,7 @@ const VirtualTable: FC<TableProps<any>> = ({
                     setColsWithFixedWidth(
                         getColsWidthFromPercentage(columns, width),
                     );
+                    console.log(width, getColsWidthFromPercentage(columns, width));
                 }
             }}
         >
@@ -127,4 +128,4 @@ const VirtualTable: FC<TableProps<any>> = ({
     );
 };
 
-export default VirtualTable;
+export default memo(VirtualTable);
