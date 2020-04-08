@@ -1,12 +1,11 @@
 import { Table } from 'antd';
-import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
 import React, {
  useState, useEffect, useRef, FC, memo, ReactElement,
 } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import { VirtualTableProps } from './interface';
-import { getColsWidthFromPercentage } from './utils';
+import { getColsWidthFromPercentage, mergedColumns } from './utils';
 import VirtualTableCell from './VirtualTable.styles';
 
 const VirtualTable: FC<VirtualTableProps<any>> = ({
@@ -16,10 +15,11 @@ const VirtualTable: FC<VirtualTableProps<any>> = ({
     rowHeight = 190,
     ...rest
 }) => {
-    const [tableWidth, setTableWidth] = useState(0);
+    const [tableWidth, setTableWidth] = useState(1000);
+    // if we don't initialize this with some
     const [colsWithFixedWidth, setColsWithFixedWidth] = useState<
         Record<string, any>[]
-    >([]);
+    >(getColsWidthFromPercentage(mergedColumns(columns, tableWidth), tableWidth));
     const gridRef = useRef<Grid>(null);
     const [connectObject] = useState(() => {
         const obj = {};
@@ -59,7 +59,6 @@ const VirtualTable: FC<VirtualTableProps<any>> = ({
         return (
             <Grid
               ref={gridRef}
-              className='virtual-grid'
               columnCount={colsWithFixedWidth.length}
               columnWidth={(index): number => {
                     const { width } = colsWithFixedWidth[index];
@@ -81,7 +80,7 @@ const VirtualTable: FC<VirtualTableProps<any>> = ({
                     const row = rawData[rowIndex];
                     const col = colsWithFixedWidth[columnIndex];
                     const renderFn = col.render;
-                    const result = renderFn ? renderFn(row, row) : row;
+                    const result = renderFn ? renderFn(row, row) : row[col.dataIndex];
 
                     return (
                         <VirtualTableCell isFirstCell={columnIndex === 0} isLastRowCell={rowIndex === rawData.length - 1} style={{ ...style, overflow: 'auto' }}>
@@ -108,7 +107,7 @@ const VirtualTable: FC<VirtualTableProps<any>> = ({
             <Table
               {...rest}
               scroll={scroll}
-              className={classNames(className, 'virtual-table')}
+              className={className}
               columns={colsWithFixedWidth}
               pagination={false}
               components={{

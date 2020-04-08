@@ -39,7 +39,6 @@
     "apollo-upload-client": "^13.0.0",
     "axios": "^0.19.2",
     "babel-plugin-import": "^1.13.0",
-    "classnames": "^2.2.6",
     "craco": "0.0.3",
     "craco-antd": "^1.14.1",
     "craco-preact": "^1.1.0",
