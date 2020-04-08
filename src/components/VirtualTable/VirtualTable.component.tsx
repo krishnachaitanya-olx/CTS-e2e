@@ -37,11 +37,13 @@ const VirtualTable: FC<VirtualTableProps<any>> = ({
     });
 
     const resetVirtualGrid = (): void => {
-        gridRef.current?.resetAfterIndices({
-            rowIndex: 0,
-            columnIndex: 0,
-            shouldForceUpdate: false,
-        });
+        if (gridRef.current) {
+            gridRef.current.resetAfterIndices({
+                rowIndex: 0,
+                columnIndex: 0,
+                shouldForceUpdate: false,
+            });
+        }
     };
 
     useEffect(() => resetVirtualGrid, []);
@@ -52,7 +54,7 @@ const VirtualTable: FC<VirtualTableProps<any>> = ({
         { scrollbarSize, ref, onScroll }: any,
     ): ReactElement => {
         ref.current = connectObject;
-        const height: number = parseInt(`${scroll?.y}`, 10) || 100;
+        const height: number = parseInt(`${scroll && scroll.y}`, 10) || 100;
 
         return (
             <Grid
