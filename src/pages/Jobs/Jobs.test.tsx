@@ -76,8 +76,8 @@ describe('JobsPage', () => {
             expect(getByTestId('contract')).toHaveTextContent('PERMANENT');
             // important people
             expect(getByTestId('important-people-cse')).toHaveTextContent('CSE Pratik Tawde');
-            expect(getByTestId('important-people-kam')).toHaveTextContent('KAM Pratik Tawde');
-            expect(getByTestId('important-people-gfi')).toHaveTextContent('GFI Pratik Tawde');
+            expect(getByTestId('important-people-kam')).toHaveTextContent('KAM Tawde');
+            expect(getByTestId('important-people-gfi')).toHaveTextContent('GFI Tawde');
             // salary
             expect(getByTestId('salary')).toHaveTextContent('4.0 L -5.0 L ANNUAL');
         });
