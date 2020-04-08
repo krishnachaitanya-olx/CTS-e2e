@@ -5,9 +5,9 @@ import React, {
  useState, useEffect, useRef, FC, memo, ReactElement,
 } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
-import './VirtualTable.style.css';
 import { VirtualTableProps } from './interface';
 import { getColsWidthFromPercentage } from './utils';
+import VirtualTableCell from './VirtualTable.styles';
 
 const VirtualTable: FC<VirtualTableProps<any>> = ({
     columns,
@@ -82,21 +82,9 @@ const VirtualTable: FC<VirtualTableProps<any>> = ({
                     const result = renderFn ? renderFn(row, row) : row;
 
                     return (
-                        <div
-                          className={classNames('virtual-table-cell', {
-                                'virtual-table-cell-last':
-                                    rowIndex
-                                    === rawData.length - 1,
-                            }, {
-                                'virtual-table-cell-first': columnIndex === 0,
-                            })}
-                          style={{
-                                ...style,
-                                overflow: 'auto',
-                            }}
-                        >
+                        <VirtualTableCell isFirstCell={columnIndex === 0} isLastRowCell={rowIndex === rawData.length - 1} style={{ ...style, overflow: 'auto' }}>
                             {result}
-                        </div>
+                        </VirtualTableCell>
                     );
                 }}
             </Grid>
