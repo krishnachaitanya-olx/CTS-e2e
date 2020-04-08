@@ -13,7 +13,7 @@ const VirtualTable: FC<VirtualTableProps<any>> = ({
     columns,
     scroll,
     className,
-    rowHeight = 170,
+    rowHeight = 190,
     ...rest
 }) => {
     const [tableWidth, setTableWidth] = useState(0);
