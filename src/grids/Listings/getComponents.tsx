@@ -1,5 +1,4 @@
 import {
-    memoize,
     get,
     set,
     random,
@@ -11,15 +10,14 @@ import ListingSearch from 'components/ListingSearch/ListingSearch.component';
 import ListingTable from 'components/ListingTable/ListingTable.component';
 
 const ListingSidebar = lazy(() => import('grids/ListingSidebar/ListingSidebar.component'));
-const tableOnRow = {
-    onChange: (selectedRowKeys: any, selectedRows: any): void => {
-        console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-    },
-};
 
 const getComponent = (
     childrenProps: ReactNode,
     data: ListingGqlData,
+    selectedRow: Record<string, any>,
+    changeSelectedRow: Function,
+    openSidebar: boolean,
+    changeSidebarState: Function,
 ): Array<ReactNode> => {
     let Table: ReactNode = null;
     let Search: ReactNode = null;
@@ -44,12 +42,27 @@ const getComponent = (
                         ...child.props,
                         dataSource: edges,
                         id: 'listing-table',
-                        rowSelection: tableOnRow,
+                        onRow: (record: any): object => (
+                            {
+                              onClick: (): void => {
+                                if (selectedRow.id === record.id) {
+                                    changeSidebarState(false);
+                                    changeSelectedRow({});
+                                } else {
+                                    changeSidebarState(true);
+                                    changeSelectedRow(record);
+                                }
+                              }, // click row
+                            }
+                        ),
                         extra: (
                             <Lazy>
                                 <ListingSidebar
                                   getContainer='#listing-table'
-                                  visible
+                                  visible={openSidebar}
+                                  style={{ position: 'absolute', width: '40%' }}
+                                  width='100%'
+                                  data={selectedRow}
                                 />
                             </Lazy>
                         ),
@@ -66,4 +79,5 @@ const getComponent = (
     return [Table, Search, Sort, Filter];
 };
 
-export default memoize(getComponent);
+export default getComponent;
+// export default memoize(getComponent);

@@ -60,6 +60,33 @@ const jobShape = `
         last_name
       }
     }
+    point_of_contacts {
+      user {
+        first_name
+        last_name
+      }
+    }
+    associated_dses {
+      user {
+        first_name
+        last_name
+      }
+    }
+    associated_schedulers {
+      user {
+        first_name
+        last_name
+      }
+    }
+    associated_partner_pocs {
+      user {
+        first_name
+        last_name
+      }
+    }
+    partner_visibility {
+      visibility
+    }
 `;
 
 const jobsQuery = gql`

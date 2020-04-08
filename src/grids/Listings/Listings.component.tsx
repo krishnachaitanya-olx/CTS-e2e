@@ -1,10 +1,10 @@
 import { useQuery } from '@apollo/react-hooks';
 import {
- Layout, PageHeader, Row, Col, Result,
+ Layout, PageHeader, Row, Col,
 } from 'antd';
 import { gql } from 'apollo-boost';
-import React, { memo, FC } from 'react';
-// import dummyData from './dummyData';
+import React, { memo, FC, useState } from 'react';
+import dummyData from './fixtures/sample.data';
 import getComponent from './getComponents';
 import { ListingInterface } from './interfaces';
 import { PageLayout } from './Styles.styles';
@@ -16,6 +16,8 @@ const {
 const areEqual = (): boolean => true;
 
 const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) => {
+  const [selectedRow, changeSelectedRow] = useState({});
+  const [openSidebar, changeSidebarState] = useState(false);
   const {
     loading, error, data,
     // TODO: change dataSourceGql to optional chaining after fixing jest
@@ -35,16 +37,20 @@ const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) =
       </div>
     );
   }
-  if (error) {
-    return (
-      <Result
-        status='500'
-        title='500'
-        subTitle='Sorry, Server returned an error.'
-      />
-    );
-  }
-  const [Table, Search] = getComponent(children, data);
+  // if (error) {
+  //   return (
+  //     <Result
+  //       status='500'
+  //       title='500'
+  //       subTitle='Sorry, Server returned an error.'
+  //     />
+  //   );
+  // }
+  console.log('listing', error, data);
+  console.log('coming in parent', selectedRow, openSidebar);
+  const [Table, Search] = getComponent(
+    children, dummyData, selectedRow, changeSelectedRow, openSidebar, changeSidebarState,
+  );
   return (
     <PageLayout>
       <PageHeader
