@@ -1,25 +1,9 @@
-import { MockedProvider } from '@apollo/react-testing';
+import { ApolloProvider } from '@apollo/react-hooks';
 import React, { FC } from 'react';
 import { Helmet } from 'react-helmet';
-import mockData from '../Jobs/Jobs.fixture';
 import GlobalStyle from './App.style';
 import Routes from './Routes.component';
-import jobsQuery from 'pages/Jobs/Jobs.query';
-
-const successMock = {
-    request: {
-        query: jobsQuery,
-        variables: {
-            filters: {},
-            sort: 'modified__DESC',
-            first: 20,
-            after: 0,
-        },
-    },
-    result: {
-        data: mockData,
-    },
-};
+import client from 'utils/graphql/client';
 
 const App: FC<{}> = () => (
     <>
@@ -30,16 +14,9 @@ const App: FC<{}> = () => (
         >
             <meta name='description' content='CMS for Aasaanjobs' />
         </Helmet>
-        <MockedProvider
-          mocks={[successMock]}
-          addTypename={false}
-          defaultOptions={{
-                watchQuery: { fetchPolicy: 'no-cache' },
-                query: { fetchPolicy: 'no-cache' },
-            }}
-        >
+        <ApolloProvider client={client}>
             <Routes />
-        </MockedProvider>
+        </ApolloProvider>
     </>
 );
 
