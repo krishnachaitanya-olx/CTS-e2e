@@ -1,5 +1,4 @@
 import { Table } from 'antd';
-import { TableProps } from 'antd/lib/table';
 import classNames from 'classnames';
 import ResizeObserver from 'rc-resize-observer';
 import React, {
@@ -7,12 +6,14 @@ import React, {
 } from 'react';
 import { VariableSizeGrid as Grid } from 'react-window';
 import './VirtualTable.style.css';
+import { VirtualTableProps } from './interface';
 import { getColsWidthFromPercentage } from './utils';
 
-const VirtualTable: FC<TableProps<any>> = ({
+const VirtualTable: FC<VirtualTableProps<any>> = ({
     columns,
     scroll,
     className,
+    rowHeight = 170,
     ...rest
 }) => {
     const [tableWidth, setTableWidth] = useState(0);
@@ -66,7 +67,7 @@ const VirtualTable: FC<TableProps<any>> = ({
                 }}
               height={height}
               rowCount={rawData.length}
-              rowHeight={(): number => 170}
+              rowHeight={(): number => rowHeight}
               width={tableWidth}
               onScroll={({ scrollLeft }): void => {
                     onScroll({
@@ -91,6 +92,7 @@ const VirtualTable: FC<TableProps<any>> = ({
                             })}
                           style={{
                                 ...style,
+                                overflow: 'auto',
                             }}
                         >
                             {result}

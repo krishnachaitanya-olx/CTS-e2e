@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import { TableProps } from 'antd/lib/table';
 import React, { FC } from 'react';
+import { VirtualTableProps } from 'components/VirtualTable/interface';
 import VirtualTable from 'components/VirtualTable/VirtualTable.component';
 
-const ListingTable: FC<TableProps<any>> = ({
+const ListingTable: FC<VirtualTableProps<any>> = ({
     columns,
     dataSource,
     ...rest
-}: TableProps<any>) => (
+}: VirtualTableProps<any>) => (
     <VirtualTable
       columns={columns}
       dataSource={dataSource}
