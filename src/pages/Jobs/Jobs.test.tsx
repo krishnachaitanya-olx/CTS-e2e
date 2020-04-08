@@ -47,11 +47,11 @@ describe('JobsPage', () => {
         const headers = container.getElementsByTagName('th');
 
         await waitFor(() => {
-            expect(headers.item(0)).toHaveTextContent('Job');
-            expect(headers.item(1)).toHaveTextContent('Company');
-            expect(headers.item(2)).toHaveTextContent('Job type');
-            expect(headers.item(3)).toHaveTextContent('Openings');
-            expect(headers.item(4)).toHaveTextContent('Important people');
+            expect(headers.item(1)).toHaveTextContent('Job');
+            expect(headers.item(2)).toHaveTextContent('Company');
+            expect(headers.item(3)).toHaveTextContent('Job type');
+            expect(headers.item(4)).toHaveTextContent('Openings');
+            expect(headers.item(5)).toHaveTextContent('Important people');
         });
     });
 
