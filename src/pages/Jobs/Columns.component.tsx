@@ -7,6 +7,8 @@ import {
 } from 'antd';
 import { get, map } from 'lodash';
 import React, { FC, memo } from 'react';
+// import { Link } from 'react-router-dom';
+import Link from 'components/Link/Link.component';
 import numberSuffix from 'utils/salary/numberSuffix';
 
 interface Columns {
@@ -21,12 +23,24 @@ export const JobColumn: FC<Columns> = memo(
     ({ record }) => (
         <Row data-testid='job'>
             <Col span={24}>
-                <Title level={4} className='no-margin'>
-                    { get(record, 'title', '') }
-                </Title>
+                <Link
+                  isExternal
+                  to={`job/${get(record, 'id', '')}`}
+                >
+                    <Title
+                      disabled={get(record, 'stage', '') === 'REJECTED'}
+                      level={4}
+                      className='no-margin'
+                    >
+                        { get(record, 'title', '') }
+                    </Title>
+                </Link>
             </Col>
             <Col data-testid='functional-area' span={24}>
-                <Text type='secondary'>
+                <Text
+                  disabled={get(record, 'stage', '') !== 'APPROVED'}
+                  type='secondary'
+                >
                     { get(record, 'functional_area.name', '') }
                 </Text>
             </Col>

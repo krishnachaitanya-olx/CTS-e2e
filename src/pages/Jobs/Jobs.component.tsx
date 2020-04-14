@@ -1,6 +1,7 @@
 import React, { ReactElement, memo, FC } from 'react';
 import jobsQuery from './Jobs.query';
 import columns from './JobsColumns.schema';
+import Sidebar from './Sidebar.component';
 import Search from 'components/ListingSearch/ListingSearch.component';
 import Table from 'components/ListingTable/ListingTable.component';
 import Grid from 'grids/Listings/Listings.component';
@@ -11,6 +12,7 @@ const JobsPage: FC<{}> = (): ReactElement => (
     dataSourceGql={{
       query: jobsQuery,
     }}
+    Sidebar={Sidebar}
   >
     <Search />
     <Table

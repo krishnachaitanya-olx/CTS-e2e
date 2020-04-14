@@ -3,13 +3,13 @@ import {
     set,
     random,
 } from 'lodash';
-import React, { ReactNode, cloneElement, lazy } from 'react';
+import React, {
+ ReactNode, cloneElement, lazy,
+} from 'react';
 import { ListingGqlData } from './interfaces';
 import Lazy from 'components/Lazy/Lazy.component';
 import ListingSearch from 'components/ListingSearch/ListingSearch.component';
 import ListingTable from 'components/ListingTable/ListingTable.component';
-
-const ListingSidebar = lazy(() => import('grids/ListingSidebar/ListingSidebar.component'));
 
 const getComponent = (
     childrenProps: ReactNode,
@@ -18,11 +18,13 @@ const getComponent = (
     changeSelectedRow: Function,
     openSidebar: boolean,
     changeSidebarState: Function,
+    Sidebar: any,
 ): Array<ReactNode> => {
     let Table: ReactNode = null;
     let Search: ReactNode = null;
     const Sort: ReactNode = null;
     const Filter: ReactNode = null;
+    const ListingSidebar = lazy(() => import('grids/ListingSidebar/ListingSidebar.component'));
     let children = [];
     const edges = data.nodes.edges.map((obj) => {
         set(obj, 'key', get(obj, 'id', random(0, 5).toString()));
@@ -60,10 +62,15 @@ const getComponent = (
                                 <ListingSidebar
                                   getContainer='#listing-table'
                                   visible={openSidebar}
-                                  style={{ position: 'absolute', width: '40%' }}
+                                  style={openSidebar ? { position: 'absolute', width: '40%' } : {}}
                                   width='100%'
                                   data={selectedRow}
-                                />
+                                >
+                                    <Sidebar
+                                      data={selectedRow}
+                                      openSidebar={changeSidebarState}
+                                    />
+                                </ListingSidebar>
                             </Lazy>
                         ),
                     });
@@ -80,4 +87,3 @@ const getComponent = (
 };
 
 export default getComponent;
-// export default memoize(getComponent);

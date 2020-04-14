@@ -3,7 +3,9 @@ import {
  Layout, PageHeader, Row, Col,
 } from 'antd';
 import { gql } from 'apollo-boost';
-import React, { memo, FC, useState } from 'react';
+import React, {
+ memo, FC, useState, isValidElement,
+} from 'react';
 import dummyData from './fixtures/sample.data';
 import getComponent from './getComponents';
 import { ListingInterface } from './interfaces';
@@ -15,7 +17,9 @@ const {
 } = Layout;
 const areEqual = (): boolean => true;
 
-const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) => {
+const ListingGrid: FC<ListingInterface> = ({
+  children, title, dataSourceGql, Sidebar,
+}) => {
   const [selectedRow, changeSelectedRow] = useState({});
   const [openSidebar, changeSidebarState] = useState(false);
   const {
@@ -46,10 +50,15 @@ const ListingGrid: FC<ListingInterface> = ({ children, title, dataSourceGql }) =
   //     />
   //   );
   // }
+  console.log('coming in here', Sidebar, isValidElement(Sidebar));
+  if (!Sidebar) {
+    return (
+      <h1>Sidebar is needed</h1>
+    );
+  }
   console.log('listing', error, data);
-  console.log('coming in parent', selectedRow, openSidebar);
   const [Table, Search] = getComponent(
-    children, dummyData, selectedRow, changeSelectedRow, openSidebar, changeSidebarState,
+    children, dummyData, selectedRow, changeSelectedRow, openSidebar, changeSidebarState, Sidebar,
   );
   return (
     <PageLayout>

@@ -92,7 +92,7 @@ const VirtualTable: FC<VirtualTableProps<any>> = ({
             </Grid>
         );
     };
-
+    console.log('coming in rest', rest);
     return (
         <ResizeObserver
           onResize={({ width }: { width: number }): void => {

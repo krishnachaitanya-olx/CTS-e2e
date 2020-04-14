@@ -31,6 +31,7 @@ export interface ListingInterface {
   dataSourceRest?: SourceRest;
   children: ReactNode;
   title: ReactNode;
+  Sidebar: any;
 }
 
 export interface ListingGqlData {
