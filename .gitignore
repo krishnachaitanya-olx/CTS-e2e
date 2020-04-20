@@ -32,3 +32,4 @@ storybook*
 # ignore config and secret
 config
 secret
+.env

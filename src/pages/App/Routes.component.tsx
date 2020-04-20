@@ -8,7 +8,7 @@ const JobPage = lazy(() => import('pages/Jobs/Jobs.component'));
 const Routes: FC<{}> = () => (
     <Lazy>
         <Switch>
-            <Route path='/jobs' component={JobPage} />
+            <Route path='/' component={JobPage} />
             <Route component={NotFound} />
         </Switch>
     </Lazy>

@@ -1,9 +1,11 @@
+import { History } from 'history';
 import React, { StrictMode } from 'react';
-
 import { render } from 'react-dom';
 import { registerObserver } from 'react-perf-devtool';
 import { Router } from 'react-router-dom';
+import BroadcasterCotext from 'contexts/broadcaster';
 import App from 'pages/App/App.component';
+import { Broadcaster } from 'services/broadcaster';
 import serviceWorker from 'serviceWorker';
 import history from 'utils/misc/history';
 
@@ -13,18 +15,32 @@ if (process.env.NODE_ENV !== 'production') {
         collapseGroups: true,
     }));
 }
+
+const broadcaster = new Broadcaster();
+
 /**
  * String of the application.
  * React strict mode implememnted.
  */
-render(
-    <Router history={history}>
-        <StrictMode>
-            <App />
-        </StrictMode>
-    </Router>,
-    document.getElementById('root'),
+const root = (
+    <StrictMode>
+      <BroadcasterCotext.Provider value={broadcaster}>
+        <App />
+      </BroadcasterCotext.Provider>
+    </StrictMode>
 );
+
+if (process.env.NODE_ENV === 'production') {
+    broadcaster.onInit((shellHistory: History) => {
+        console.log('initializing...');
+        render(
+          <Router history={shellHistory}>{root}</Router>,
+          document.getElementById('root'),
+        );
+    });
+} else {
+    render(<Router history={history}>{root}</Router>, document.getElementById('root'));
+}
 
 registerObserver();
 // If you want your app to work offline and load faster, you can change
