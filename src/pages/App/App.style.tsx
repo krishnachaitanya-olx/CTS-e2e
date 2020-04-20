@@ -22,6 +22,10 @@ const GlobalStyle = createGlobalStyle`
     margin-right: 0px !important;
   }
 
+  .mb-10 {
+    margin-bottom: 10px;
+  }
+
   .listing-action-icons {
     color: #d4d7de;
     font-size: 1.2rem;

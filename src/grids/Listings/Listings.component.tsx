@@ -1,8 +1,8 @@
-import { useQuery } from '@apollo/react-hooks';
+// import { useQuery } from '@apollo/react-hooks';
 import {
  Layout, PageHeader, Row, Col,
 } from 'antd';
-import { gql } from 'apollo-boost';
+// import { gql } from 'apollo-boost';
 import React, {
  memo, FC, useState, isValidElement,
 } from 'react';
@@ -10,7 +10,7 @@ import dummyData from './fixtures/sample.data';
 import getComponent from './getComponents';
 import { ListingInterface } from './interfaces';
 import { PageLayout } from './Styles.styles';
-import ListSkelton from 'assests/skeltons/ListingSkelton.component';
+// import ListSkelton from 'assests/skeltons/ListingSkelton.component';
 
 const {
  Content,
@@ -22,25 +22,25 @@ const ListingGrid: FC<ListingInterface> = ({
 }) => {
   const [selectedRow, changeSelectedRow] = useState({});
   const [openSidebar, changeSidebarState] = useState(false);
-  const {
-    loading, error, data,
-    // TODO: change dataSourceGql to optional chaining after fixing jest
-  } = useQuery((dataSourceGql && dataSourceGql.query) || gql``, {
-    skip: !dataSourceGql || !dataSourceGql.query,
-    variables: {
-      filters: {},
-      sort: 'modified__DESC',
-      first: 20,
-      after: 0,
-    },
-  });
-  if (loading) {
-    return (
-      <div aria-label='loading-skeleton'>
-        <ListSkelton />
-      </div>
-    );
-  }
+  // const {
+  //   loading, error, data,
+  //   // TODO: change dataSourceGql to optional chaining after fixing jest
+  // } = useQuery((dataSourceGql && dataSourceGql.query) || gql``, {
+  //   skip: !dataSourceGql || !dataSourceGql.query,
+  //   variables: {
+  //     filters: {},
+  //     sort: 'modified__DESC',
+  //     first: 20,
+  //     after: 0,
+  //   },
+  // });
+  // if (loading) {
+  //   return (
+  //     <div aria-label='loading-skeleton'>
+  //       <ListSkelton />
+  //     </div>
+  //   );
+  // }
   // if (error) {
   //   return (
   //     <Result
@@ -56,7 +56,7 @@ const ListingGrid: FC<ListingInterface> = ({
       <h1>Sidebar is needed</h1>
     );
   }
-  console.log('listing', error, data);
+  console.log('listing', dataSourceGql);
   const [Table, Search] = getComponent(
     children, dummyData, selectedRow, changeSelectedRow, openSidebar, changeSidebarState, Sidebar,
   );
