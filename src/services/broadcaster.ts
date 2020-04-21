@@ -20,6 +20,40 @@ class Broadcaster {
 
     private currentOnCookieChange: (() => void) | null = null;
 
+    private channelListeners: {
+        channel: string;
+        cb: (message: any) => void;
+    }[] = [];
+
+    /* eslint-disable class-methods-use-this */
+    private postMessage(type: string, data: any = {}): void {
+        window.parent.postMessage({
+            id: Date.now(),
+            type,
+            ...data,
+        }, '*');
+    }
+
+    send(channel: string, message: any): void {
+        this.postMessage('channel', {
+            channel,
+            message,
+        });
+    }
+
+    listen(channel: string, cb: (message: any) => void): void {
+        this.channelListeners.push({
+            channel,
+            cb,
+        });
+    }
+
+    removeListener(channel: string, cb: (message: any) => void): void {
+        this.channelListeners = this.channelListeners.filter(
+            (listener) => listener.channel !== channel && cb !== listener.cb,
+        );
+    }
+
     onInit(cb: (history: History) => void): void {
         window.addEventListener('message', (message) => {
             const { data } = message;
@@ -74,6 +108,20 @@ class Broadcaster {
                         }
                         break;
                     }
+                    case 'channel': {
+                        const {
+                            channel,
+                            message: msg,
+                        }: { channel: string; message: any } = data;
+
+                        this.channelListeners.forEach((listener) => {
+                            if (listener.channel === channel) {
+                                listener.cb(msg);
+                            }
+                        });
+
+                        break;
+                    }
                     default:
                 }
             }
@@ -89,26 +137,18 @@ class Broadcaster {
     readMessages(cb: (message: Mail[]) => void): void {
       this.currentMailReader = cb;
 
-      window.parent.postMessage({
-        id: Date.now(),
-        type: 'read-mail',
-        path: this.path,
-      }, '*');
+      this.postMessage('read-mail', { path: this.path });
     }
 
     sendMessage(message: { to: string; payload: any }): void {
-      const id = Date.now();
-
-      window.parent.postMessage({
-        id,
-        type: 'mail',
+      this.postMessage('mail', {
         message: {
-          id,
+          id: Date.now(),
           from: this.path,
           to: message.to,
           payload: message.payload,
         },
-      }, '*');
+      });
     }
 
     registerHistory(history: History): void {
@@ -121,14 +161,9 @@ class Broadcaster {
             const shellPathname = window.parent.location.pathname;
 
             if (shellPathname.startsWith(this.path)) {
-                window.parent.postMessage(
-                    {
-                        id: Date.now(),
-                        type: 'history-update',
-                        location,
-                    },
-                    '*',
-                );
+                this.postMessage('history-update', {
+                    location,
+                });
             }
         });
     }
@@ -139,13 +174,8 @@ class Broadcaster {
     }
 
     navigate(pathname: string): void {
-        window.parent.postMessage(
-            {
-                id: Date.now(),
-                type: 'navigate',
-                pathname,
-            },
-            '*',
-        );
+        this.postMessage('navigate', {
+            pathname,
+        });
     }
 }
