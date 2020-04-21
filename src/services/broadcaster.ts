@@ -34,14 +34,14 @@ class Broadcaster {
         }, '*');
     }
 
-    send(channel: string, message: any): void {
+    emit(channel: string, message: any): void {
         this.postMessage('channel', {
             channel,
             message,
         });
     }
 
-    listen(channel: string, cb: (message: any) => void): void {
+    on(channel: string, cb: (message: any) => void): void {
         this.channelListeners.push({
             channel,
             cb,

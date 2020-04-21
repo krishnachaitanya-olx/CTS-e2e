@@ -32,7 +32,6 @@ const root = (
 
 if (process.env.NODE_ENV === 'production') {
     broadcaster.onInit((shellHistory: History) => {
-        console.log('initializing...');
         render(
           <Router history={shellHistory}>{root}</Router>,
           document.getElementById('root'),
@@ -46,10 +45,10 @@ broadcaster.onCookieChange(() => {
   console.log('cookie changed in shell');
 });
 
-broadcaster.listen('MSG', (msg) => {
+broadcaster.on('MSG', (msg) => {
   console.log(`shell said ${msg}`);
 
-  broadcaster.send('MSG', 'helloo');
+  broadcaster.emit('MSG', 'helloo');
 });
 
 registerObserver();
