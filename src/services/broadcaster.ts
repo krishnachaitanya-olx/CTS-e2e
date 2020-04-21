@@ -18,6 +18,8 @@ class Broadcaster {
 
     private currentMailReader: ((message: Mail[]) => void) | null = null;
 
+    private currentOnCookieChange: (() => void) | null = null;
+
     onInit(cb: (history: History) => void): void {
         window.addEventListener('message', (message) => {
             const { data } = message;
@@ -62,12 +64,26 @@ class Broadcaster {
                       }
                       break;
                     }
+                    case 'cookie-update': {
+                        const { cookie }: { cookie: string } = data;
+
+                        document.cookie = cookie;
+
+                        if (this.currentOnCookieChange) {
+                            this.currentOnCookieChange();
+                        }
+                        break;
+                    }
                     default:
                 }
             }
 
             this.lastMessageId = data.id;
         });
+    }
+
+    onCookieChange(cb: () => void): void {
+        this.currentOnCookieChange = cb;
     }
 
     readMessages(cb: (message: Mail[]) => void): void {

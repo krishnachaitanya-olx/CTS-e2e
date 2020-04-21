@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 import { Broadcaster } from 'services/broadcaster';
 
-const BroadcasterCotext = createContext<Broadcaster|null>(null);
+const BroadcasterContext = createContext<Broadcaster|null>(null);
 
-export default BroadcasterCotext;
+export default BroadcasterContext;

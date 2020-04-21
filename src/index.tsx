@@ -3,7 +3,7 @@ import React, { StrictMode } from 'react';
 import { render } from 'react-dom';
 import { registerObserver } from 'react-perf-devtool';
 import { Router } from 'react-router-dom';
-import BroadcasterCotext from 'contexts/broadcaster';
+import BroadcasterContext from 'contexts/broadcaster';
 import App from 'pages/App/App.component';
 import { Broadcaster } from 'services/broadcaster';
 import serviceWorker from 'serviceWorker';
@@ -24,9 +24,9 @@ const broadcaster = new Broadcaster();
  */
 const root = (
     <StrictMode>
-      <BroadcasterCotext.Provider value={broadcaster}>
+      <BroadcasterContext.Provider value={broadcaster}>
         <App />
-      </BroadcasterCotext.Provider>
+      </BroadcasterContext.Provider>
     </StrictMode>
 );
 
@@ -41,6 +41,10 @@ if (process.env.NODE_ENV === 'production') {
 } else {
     render(<Router history={history}>{root}</Router>, document.getElementById('root'));
 }
+
+broadcaster.onCookieChange(() => {
+  console.log('cookie changed in shell');
+});
 
 registerObserver();
 // If you want your app to work offline and load faster, you can change
