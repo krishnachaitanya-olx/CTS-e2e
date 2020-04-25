@@ -41,16 +41,6 @@ if (process.env.NODE_ENV === 'production') {
     render(<Router history={history}>{root}</Router>, document.getElementById('root'));
 }
 
-broadcaster.onCookieChange(() => {
-  console.log('cookie changed in shell');
-});
-
-broadcaster.on('MSG', (msg) => {
-  console.log(`shell said ${msg}`);
-
-  broadcaster.emit('MSG', 'helloo');
-});
-
 registerObserver();
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

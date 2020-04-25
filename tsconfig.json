@@ -22,7 +22,7 @@
     "baseUrl": "src",
   },
   "include": [
-    "src", "../shell/src/pages/Sandbox"
+    "src", "../shell/src/pages/Sandbox", "../shell/src/components/ProtectedRoute"
   ],
   "exclude": ["node_modules", "babel.config.js", "metro.config.js", "craco.config.js", "jest.config.js"],
   "typedocOptions": {
